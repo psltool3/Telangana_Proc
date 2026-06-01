@@ -8,12 +8,8 @@ class Warehouse {
     public $type;
     public $latitude;
     public $longitude;
-    public $normal_rice;
-    public $state_frk_rice;
-    public $central_frk_rice;
-    public $storage_rice;
-    public $storage_state_frk_rice;
-    public $storage_central_frk_rice;
+    public $requirement;
+    public $storage_capacity;
     public $uniqueid;
     public $active;
 
@@ -47,28 +43,12 @@ class Warehouse {
         return $this->longitude;
     }
 
-    public function getNormalRice() {
-        return $this->normal_rice;
+    public function getRequirement() {
+        return $this->requirement;
     }
 
-    public function getStateFrkRice() {
-        return $this->state_frk_rice;
-    }
-
-    public function getCentralFrkRice() {
-        return $this->central_frk_rice;
-    }
-
-    public function getStorageRice() {
-        return $this->storage_rice;
-    }
-
-    public function getStorageStateFrkRice() {
-        return $this->storage_state_frk_rice;
-    }
-
-    public function getStorageCentralFrkRice() {
-        return $this->storage_central_frk_rice;
+    public function getStorageCapacity() {
+        return $this->storage_capacity;
     }
 	
 	public function getUniqueid() {
@@ -110,28 +90,12 @@ class Warehouse {
         $this->longitude = $longitude;
     }
 
-    public function setNormalRice($normal_rice) {
-        $this->normal_rice = $normal_rice;
+    public function setRequirement($requirement) {
+        $this->requirement = $requirement;
     }
 
-    public function setStateFrkRice($state_frk_rice) {
-        $this->state_frk_rice = $state_frk_rice;
-    }
-
-    public function setCentralFrkRice($central_frk_rice) {
-        $this->central_frk_rice = $central_frk_rice;
-    }
-
-    public function setStorageRice($storage_rice) {
-        $this->storage_rice = $storage_rice;
-    }
-
-    public function setStorageStateFrkRice($storage_state_frk_rice) {
-        $this->storage_state_frk_rice = $storage_state_frk_rice;
-    }
-
-    public function setStorageCentralFrkRice($storage_central_frk_rice) {
-        $this->storage_central_frk_rice = $storage_central_frk_rice;
+    public function setStorageCapacity($storage_capacity) {
+        $this->storage_capacity = $storage_capacity;
     }
 	
 	public function setUniqueid($uniqueid) {
@@ -143,7 +107,7 @@ class Warehouse {
     }
 	
 	function insert(Warehouse $warehouse){
-        return "INSERT INTO warehouse (district, name, id, warehousetype, type, latitude, longitude, normal_rice, state_frk_rice, central_frk_rice, storage_rice, storage_state_frk_rice, storage_central_frk_rice, uniqueid, active) VALUES ('".$warehouse->getDistrict()."','".$warehouse->getName()."','".$warehouse->getId()."','".$warehouse->getWarehousetype()."','".$warehouse->getType()."','".$warehouse->getLatitude()."','".$warehouse->getLongitude()."','".$warehouse->getNormalRice()."','".$warehouse->getStateFrkRice()."','".$warehouse->getCentralFrkRice()."','".$warehouse->getStorageRice()."','".$warehouse->getStorageStateFrkRice()."','".$warehouse->getStorageCentralFrkRice()."','".$warehouse->getUniqueid()."','".$warehouse->getActive()."')";
+        return "INSERT INTO warehouse (district, name, id, warehousetype, type, latitude, longitude, requirement, storage_capacity, uniqueid, active) VALUES ('".$warehouse->getDistrict()."','".$warehouse->getName()."','".$warehouse->getId()."','".$warehouse->getWarehousetype()."','".$warehouse->getType()."','".$warehouse->getLatitude()."','".$warehouse->getLongitude()."','".$warehouse->getRequirement()."','".$warehouse->getStorageCapacity()."','".$warehouse->getUniqueid()."','".$warehouse->getActive()."')";
     }
 
     function delete(Warehouse $warehouse){
@@ -171,11 +135,11 @@ class Warehouse {
     }
 
     function update(Warehouse $warehouse){
-      return  "UPDATE warehouse SET district = '".$warehouse->getDistrict()."',name = '".$warehouse->getName()."',id = '".$warehouse->getId()."',warehousetype = '".$warehouse->getWarehousetype()."',type = '".$warehouse->getType()."',latitude = '".$warehouse->getLatitude()."',longitude = '".$warehouse->getLongitude()."',normal_rice = '".$warehouse->getNormalRice()."',state_frk_rice = '".$warehouse->getStateFrkRice()."',central_frk_rice = '".$warehouse->getCentralFrkRice()."',storage_rice = '".$warehouse->getStorageRice()."',storage_state_frk_rice = '".$warehouse->getStorageStateFrkRice()."',storage_central_frk_rice = '".$warehouse->getStorageCentralFrkRice()."',active = '".$warehouse->getActive()."' WHERE uniqueid = '".$warehouse->getUniqueid()."'";
+      return  "UPDATE warehouse SET district = '".$warehouse->getDistrict()."',name = '".$warehouse->getName()."',id = '".$warehouse->getId()."',warehousetype = '".$warehouse->getWarehousetype()."',type = '".$warehouse->getType()."',latitude = '".$warehouse->getLatitude()."',longitude = '".$warehouse->getLongitude()."',requirement = '".$warehouse->getRequirement()."',storage_capacity = '".$warehouse->getStorageCapacity()."',active = '".$warehouse->getActive()."' WHERE uniqueid = '".$warehouse->getUniqueid()."'";
     }
 	
 	function updateEdit(Warehouse $warehouse){
-      return  "UPDATE warehouse SET district = '".$warehouse->getDistrict()."',name = '".$warehouse->getName()."',warehousetype = '".$warehouse->getWarehousetype()."',type = '".$warehouse->getType()."',latitude = '".$warehouse->getLatitude()."',longitude = '".$warehouse->getLongitude()."',normal_rice = '".$warehouse->getNormalRice()."',state_frk_rice = '".$warehouse->getStateFrkRice()."',central_frk_rice = '".$warehouse->getCentralFrkRice()."',storage_rice = '".$warehouse->getStorageRice()."',storage_state_frk_rice = '".$warehouse->getStorageStateFrkRice()."',storage_central_frk_rice = '".$warehouse->getStorageCentralFrkRice()."',active = '".$warehouse->getActive()."' WHERE id = '".$warehouse->getId()."'";
+      return  "UPDATE warehouse SET district = '".$warehouse->getDistrict()."',name = '".$warehouse->getName()."',warehousetype = '".$warehouse->getWarehousetype()."',type = '".$warehouse->getType()."',latitude = '".$warehouse->getLatitude()."',longitude = '".$warehouse->getLongitude()."',requirement = '".$warehouse->getRequirement()."',storage_capacity = '".$warehouse->getStorageCapacity()."',active = '".$warehouse->getActive()."' WHERE id = '".$warehouse->getId()."'";
     }
 }
 

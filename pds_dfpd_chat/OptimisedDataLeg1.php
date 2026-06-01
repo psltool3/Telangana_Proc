@@ -140,7 +140,7 @@ if($currentTimestamp >= $targetTimestamp) {
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li class="active">Chattisgarh Intra Route Optimization For PDS</li>
+                    <li class="active">Telangana Intra Movement Optimization For PDS</li>
                 </ul>
                 <!-- END BREADCRUMB -->
 
@@ -154,7 +154,7 @@ if($currentTimestamp >= $targetTimestamp) {
                             <!-- START SIMPLE DATATABLE -->
                             <div class="panel panel-default">
 								<div class="panel-heading">
-                                    <h3 class="panel-title">Chattisgarh Intra Route Optimization For PDS <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
+                                    <h3 class="panel-title">Telangana Intra Movement Optimization For PDS <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
                                 </div>
                             </div>
 							<div class="row">
@@ -677,8 +677,13 @@ if($currentTimestamp >= $targetTimestamp) {
 									var approve_admin_part = "<td><button class='btn btn-warning'>System Generated</button></td>";
 								}
 								else{
-									var approve_admin_part = "<td><select class='form-control' onchange='enableDisable(\"" + uniqueid + "\")' id='" + uniqueid_bool + "' name='" + uniqueid_bool + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='same'>System Generated</option></select></td>";
-									uniqueid_bool_array.push(uniqueid_bool);
+									if(approve_district=="yes" || approve_district=="no"){
+										var approve_admin_part = "<td><select class='form-control' onchange='enableDisable(\"" + uniqueid + "\")' id='" + uniqueid_bool + "' name='" + uniqueid_bool + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='same'>System Generated</option></select></td>";
+										uniqueid_bool_array.push(uniqueid_bool);
+									}
+									else{
+										var approve_admin_part = "<td><button class='btn btn-warning' disabled>District Implementation Pending</button></td>";
+									}
 								}
 
 								if(approve_district==""){

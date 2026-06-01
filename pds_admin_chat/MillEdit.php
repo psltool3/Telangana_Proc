@@ -10,15 +10,10 @@ $type = "";
 $latitude = "";
 $longitude = "";
 
-$incoming_min_mota = "";
-$incoming_min_patla = "";
-$incoming_min_saran = "";
-$outgoing_min_mota = "";
-$outgoing_min_patla = "";
-$outgoing_min_saran = "";
+$incoming_min_paddy = "";
+$total_rice_inventory = "";
 $milling_capacity = "";
-$milling_capacity1 = "";
-$milling_capacity2 = "";
+$minimum_outgoing_rice = "";
 
 $active = "";
 
@@ -36,15 +31,10 @@ if(isset($_POST["uid"])){
 		$latitude = $row['latitude'];
 		$longitude = $row['longitude'];
         
-        $incoming_min_mota = $row['incoming_min_mota'];
-        $incoming_min_patla = $row['incoming_min_patla'];
-        $incoming_min_saran = $row['incoming_min_saran'];
-        $outgoing_min_mota = $row['outgoing_min_mota'];
-        $outgoing_min_patla = $row['outgoing_min_patla'];
-        $outgoing_min_saran = $row['outgoing_min_saran'];
+        $incoming_min_paddy = $row['incoming_min_paddy'];
+        $total_rice_inventory = $row['total_rice_inventory'];
         $milling_capacity = $row['milling_capacity'];
-        $milling_capacity1 = $row['milling_capacity1'];
-        $milling_capacity2 = $row['milling_capacity2'];
+        $minimum_outgoing_rice = $row['minimum_outgoing_rice'];
         
 		$active = $row['active'];
 	}
@@ -160,35 +150,24 @@ else{
                                             </div>
 											
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Incoming Min Mota*</label>
+                                                <label class="col-md-3 control-label">Incoming Min Paddy*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="incoming_min_mota" name="incoming_min_mota" value="<?php echo $incoming_min_mota ?>" required />
+                                                        <input type="text" class="form-control" id="incoming_min_paddy" name="incoming_min_paddy" value="<?php echo $incoming_min_paddy ?>" required />
                                                     </div>
-                                                    <span class="help-block">Incoming Min Mota</span>
+                                                    <span class="help-block">Incoming Min Paddy</span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Incoming Min Patla*</label>
+                                                <label class="col-md-3 control-label">Total Rice Inventory*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="incoming_min_patla" name="incoming_min_patla" value="<?php echo $incoming_min_patla ?>" required />
+                                                        <input type="text" class="form-control" id="total_rice_inventory" name="total_rice_inventory" value="<?php echo $total_rice_inventory ?>" required />
                                                     </div>
-                                                    <span class="help-block">Incoming Min Patla</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Incoming Min Saran*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="incoming_min_saran" name="incoming_min_saran" value="<?php echo $incoming_min_saran ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Incoming Min Saran</span>
+                                                    <span class="help-block">Total Rice Inventory</span>
                                                 </div>
                                             </div>
 
@@ -219,35 +198,13 @@ else{
                                             </div>
 											
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Milling Capacity Mota*</label>
+                                                <label class="col-md-3 control-label">Milling Capacity*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
                                                         <input type="text" class="form-control" id="milling_capacity" name="milling_capacity" value="<?php echo $milling_capacity ?>" required />
                                                     </div>
-                                                    <span class="help-block">Milling Capacity Mota</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Milling Capacity Patla*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="milling_capacity1" name="milling_capacity1" value="<?php echo $milling_capacity1 ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Milling Capacity Patla</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Milling Capacity Saran*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="milling_capacity2" name="milling_capacity2" value="<?php echo $milling_capacity2 ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Milling Capacity Saran</span>
+                                                    <span class="help-block">Milling Capacity</span>
                                                 </div>
                                             </div>
 											
@@ -263,35 +220,13 @@ else{
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">Total Normal Rice (Qtl) Inventory*</label>
+                                                <label class="col-md-3 control-label">Minimum Outgoing Rice*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="outgoing_min_mota" name="outgoing_min_mota" value="<?php echo $outgoing_min_mota ?>" required />
+                                                        <input type="text" class="form-control" id="minimum_outgoing_rice" name="minimum_outgoing_rice" value="<?php echo $minimum_outgoing_rice ?>" required />
                                                     </div>
-                                                    <span class="help-block">Total Normal Rice (Qtl) Inventory</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Total State FRK Rice (Qtl) Inventory*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="outgoing_min_patla" name="outgoing_min_patla" value="<?php echo $outgoing_min_patla ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Total State FRK Rice (Qtl) Inventory</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Total Central FRK Rice(Qtl) Inventory*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="outgoing_min_saran" name="outgoing_min_saran" value="<?php echo $outgoing_min_saran ?>" required />
-                                                    </div>
-                                                    <span class="help-block">Total Central FRK Rice(Qtl) Inventory</span>
+                                                    <span class="help-block">Minimum Outgoing Rice</span>
                                                 </div>
                                             </div>
 										   
@@ -401,21 +336,16 @@ else{
 			var id = document.getElementById('id').value;
             var district = document.getElementById('district').value;
             var milling_capacity = document.getElementById('milling_capacity').value;
-            var milling_capacity1 = document.getElementById('milling_capacity1').value;
-            var milling_capacity2 = document.getElementById('milling_capacity2').value;
-            
-            var incoming_min_mota = document.getElementById('incoming_min_mota').value;
-            var incoming_min_patla = document.getElementById('incoming_min_patla').value;
-            var incoming_min_saran = document.getElementById('incoming_min_saran').value;
-            
-            var outgoing_min_mota = document.getElementById('outgoing_min_mota').value;
-            var outgoing_min_patla = document.getElementById('outgoing_min_patla').value;
-            var outgoing_min_saran = document.getElementById('outgoing_min_saran').value;
+            var incoming_min_paddy = document.getElementById('incoming_min_paddy').value;
+            var total_rice_inventory = document.getElementById('total_rice_inventory').value;
+            var minimum_outgoing_rice = document.getElementById('minimum_outgoing_rice').value;
 
-            if (name === '' || type === '' || latitude === '' || longitude === '' || id === '' || district === '' || milling_capacity === '' || milling_capacity1 === '' || milling_capacity2 === '' || incoming_min_mota === '' || incoming_min_patla === '' || incoming_min_saran === '' || outgoing_min_mota === '' || outgoing_min_patla === '' || outgoing_min_saran === '') {
+            if (name === '' || type === '' || latitude === '' || longitude === '' || id === '' || district === '' || milling_capacity === '' || incoming_min_paddy === '' || total_rice_inventory === '' || minimum_outgoing_rice === '') {
                 alert('Please enter all fields');
                 return false;
             }
+
+            
 			
             document.getElementById('popup').style.display = 'block';
         }

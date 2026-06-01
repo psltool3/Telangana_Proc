@@ -83,6 +83,12 @@ if (!is_numeric($column[$longitude]) || $column[$longitude] <= 65) {
 	$redirect = 0;
 }
 
+
+$allowed_motorable = ['motorable', 'non motorable', 'nonmotorable', 'non-motorable'];
+if (!in_array(strtolower(trim($_POST["type"])), $allowed_motorable)) {
+    echo "Error : Motorable/Non-Motorable should be either Motorable or Non Motorable.";
+    exit();
+}
 $dbHashedPassword = $row['password'];
 if(password_verify($person->getPassword(), $dbHashedPassword)){
     

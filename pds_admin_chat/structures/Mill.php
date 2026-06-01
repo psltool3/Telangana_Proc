@@ -7,15 +7,10 @@ class Mill {
     public $type;
     public $latitude;
     public $longitude;
-    public $incoming_min_mota;
-    public $incoming_min_patla;
-    public $incoming_min_saran;
-    public $outgoing_min_mota;
-    public $outgoing_min_patla;
-    public $outgoing_min_saran;
+    public $incoming_min_paddy;
+    public $total_rice_inventory;
     public $milling_capacity;
-    public $milling_capacity1;
-    public $milling_capacity2;
+    public $minimum_outgoing_rice;
     public $uniqueid;
     public $active;
 
@@ -45,40 +40,20 @@ class Mill {
         return $this->longitude;
     }
 
-    public function getIncomingMinMota() {
-        return $this->incoming_min_mota;
+    public function getIncomingMinPaddy() {
+        return $this->incoming_min_paddy;
     }
 
-    public function getIncomingMinPatla() {
-        return $this->incoming_min_patla;
-    }
-
-    public function getIncomingMinSaran() {
-        return $this->incoming_min_saran;
-    }
-
-    public function getOutgoingMinMota() {
-        return $this->outgoing_min_mota;
-    }
-
-    public function getOutgoingMinPatla() {
-        return $this->outgoing_min_patla;
-    }
-
-    public function getOutgoingMinSaran() {
-        return $this->outgoing_min_saran;
+    public function getTotalRiceInventory() {
+        return $this->total_rice_inventory;
     }
 
     public function getMillingCapacity() {
         return $this->milling_capacity;
     }
 
-    public function getMillingCapacity1() {
-        return $this->milling_capacity1;
-    }
-
-    public function getMillingCapacity2() {
-        return $this->milling_capacity2;
+    public function getMinimumOutgoingRice() {
+        return $this->minimum_outgoing_rice;
     }
 
     public function getUniqueid() {
@@ -116,40 +91,20 @@ class Mill {
         $this->longitude = $longitude;
     }
 
-    public function setIncomingMinMota($incoming_min_mota) {
-        $this->incoming_min_mota = $incoming_min_mota;
+    public function setIncomingMinPaddy($incoming_min_paddy) {
+        $this->incoming_min_paddy = $incoming_min_paddy;
     }
 
-    public function setIncomingMinPatla($incoming_min_patla) {
-        $this->incoming_min_patla = $incoming_min_patla;
-    }
-
-    public function setIncomingMinSaran($incoming_min_saran) {
-        $this->incoming_min_saran = $incoming_min_saran;
-    }
-
-    public function setOutgoingMinMota($outgoing_min_mota) {
-        $this->outgoing_min_mota = $outgoing_min_mota;
-    }
-
-    public function setOutgoingMinPatla($outgoing_min_patla) {
-        $this->outgoing_min_patla = $outgoing_min_patla;
-    }
-
-    public function setOutgoingMinSaran($outgoing_min_saran) {
-        $this->outgoing_min_saran = $outgoing_min_saran;
+    public function setTotalRiceInventory($total_rice_inventory) {
+        $this->total_rice_inventory = $total_rice_inventory;
     }
 
     public function setMillingCapacity($milling_capacity) {
         $this->milling_capacity = $milling_capacity;
     }
 
-    public function setMillingCapacity1($milling_capacity1) {
-        $this->milling_capacity1 = $milling_capacity1;
-    }
-
-    public function setMillingCapacity2($milling_capacity2) {
-        $this->milling_capacity2 = $milling_capacity2;
+    public function setMinimumOutgoingRice($minimum_outgoing_rice) {
+        $this->minimum_outgoing_rice = $minimum_outgoing_rice;
     }
 
     public function setUniqueid($uniqueid) {
@@ -161,7 +116,7 @@ class Mill {
     }
 
     function insert(Mill $mill){
-        return "INSERT INTO mill (district, name, id, type, latitude, longitude, incoming_min_mota, incoming_min_patla, incoming_min_saran, outgoing_min_mota, outgoing_min_patla, outgoing_min_saran, milling_capacity, milling_capacity1, milling_capacity2, uniqueid, active) VALUES ('".$mill->getDistrict()."','".$mill->getName()."','".$mill->getId()."','".$mill->getType()."','".$mill->getLatitude()."','".$mill->getLongitude()."','".$mill->getIncomingMinMota()."','".$mill->getIncomingMinPatla()."','".$mill->getIncomingMinSaran()."','".$mill->getOutgoingMinMota()."','".$mill->getOutgoingMinPatla()."','".$mill->getOutgoingMinSaran()."','".$mill->getMillingCapacity()."','".$mill->getMillingCapacity1()."','".$mill->getMillingCapacity2()."','".$mill->getUniqueid()."','".$mill->getActive()."')";
+        return "INSERT INTO mill (district, name, id, type, latitude, longitude, incoming_min_paddy, total_rice_inventory, milling_capacity, minimum_outgoing_rice, uniqueid, active) VALUES ('".$mill->getDistrict()."','".$mill->getName()."','".$mill->getId()."','".$mill->getType()."','".$mill->getLatitude()."','".$mill->getLongitude()."','".$mill->getIncomingMinPaddy()."','".$mill->getTotalRiceInventory()."','".$mill->getMillingCapacity()."','".$mill->getMinimumOutgoingRice()."','".$mill->getUniqueid()."','".$mill->getActive()."')";
     }
 
     function delete(Mill $mill){
@@ -189,11 +144,11 @@ class Mill {
     }
 
     function update(Mill $mill){
-        return "UPDATE mill SET district = '".$mill->getDistrict()."',name = '".$mill->getName()."',id = '".$mill->getId()."',type = '".$mill->getType()."',latitude = '".$mill->getLatitude()."',longitude = '".$mill->getLongitude()."',incoming_min_mota = '".$mill->getIncomingMinMota()."',incoming_min_patla = '".$mill->getIncomingMinPatla()."',incoming_min_saran = '".$mill->getIncomingMinSaran()."',outgoing_min_mota = '".$mill->getOutgoingMinMota()."',outgoing_min_patla = '".$mill->getOutgoingMinPatla()."',outgoing_min_saran = '".$mill->getOutgoingMinSaran()."',milling_capacity = '".$mill->getMillingCapacity()."',milling_capacity1 = '".$mill->getMillingCapacity1()."',milling_capacity2 = '".$mill->getMillingCapacity2()."',active = '".$mill->getActive()."' WHERE uniqueid = '".$mill->getUniqueid()."'";
+        return "UPDATE mill SET district = '".$mill->getDistrict()."',name = '".$mill->getName()."',id = '".$mill->getId()."',type = '".$mill->getType()."',latitude = '".$mill->getLatitude()."',longitude = '".$mill->getLongitude()."',incoming_min_paddy = '".$mill->getIncomingMinPaddy()."',total_rice_inventory = '".$mill->getTotalRiceInventory()."',milling_capacity = '".$mill->getMillingCapacity()."',minimum_outgoing_rice = '".$mill->getMinimumOutgoingRice()."',active = '".$mill->getActive()."' WHERE uniqueid = '".$mill->getUniqueid()."'";
     }
 
     function updateEdit(Mill $mill){
-        return "UPDATE mill SET district = '".$mill->getDistrict()."',name = '".$mill->getName()."',type = '".$mill->getType()."',latitude = '".$mill->getLatitude()."',longitude = '".$mill->getLongitude()."',incoming_min_mota = '".$mill->getIncomingMinMota()."',incoming_min_patla = '".$mill->getIncomingMinPatla()."',incoming_min_saran = '".$mill->getIncomingMinSaran()."',outgoing_min_mota = '".$mill->getOutgoingMinMota()."',outgoing_min_patla = '".$mill->getOutgoingMinPatla()."',outgoing_min_saran = '".$mill->getOutgoingMinSaran()."',milling_capacity = '".$mill->getMillingCapacity()."',milling_capacity1 = '".$mill->getMillingCapacity1()."',milling_capacity2 = '".$mill->getMillingCapacity2()."',active = '".$mill->getActive()."' WHERE id = '".$mill->getId()."'";
+        return "UPDATE mill SET district = '".$mill->getDistrict()."',name = '".$mill->getName()."',type = '".$mill->getType()."',latitude = '".$mill->getLatitude()."',longitude = '".$mill->getLongitude()."',incoming_min_paddy = '".$mill->getIncomingMinPaddy()."',total_rice_inventory = '".$mill->getTotalRiceInventory()."',milling_capacity = '".$mill->getMillingCapacity()."',minimum_outgoing_rice = '".$mill->getMinimumOutgoingRice()."',active = '".$mill->getActive()."' WHERE id = '".$mill->getId()."'";
     }
 }
 

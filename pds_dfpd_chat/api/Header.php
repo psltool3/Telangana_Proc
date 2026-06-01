@@ -83,7 +83,7 @@
             <!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
 				<li class="xn-logo">
-					<span style="font-size: 19px; text-align: center; margin: 10px;color:#fff"Chattisgarh State Level</span>
+					<span style="font-size: 19px; text-align: center; margin: 10px;color:#fff"Telangana State Level</span>
 					<a href="#" class="x-navigation-control"></a>
 				</li>
 				<li class="xn-profile">

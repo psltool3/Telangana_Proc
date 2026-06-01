@@ -19,9 +19,7 @@ $mapData = [
     "PC ID" => "id",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Mota" => "mota",
-    "Patla" => "patla",
-    "Saran" => "saran",
+    "Quantity Arrival" => "quantity_arrival",
     "Active/Not-Active" => "active"
 ];
 
@@ -57,7 +55,7 @@ if($numrows>0){
 }
 
 function formatName($name) {
-    $name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -104,14 +102,12 @@ try{
             $id = -1;
             $latitude = -1;
             $longitude = -1;
-            $mota = -1;
-            $patla = -1;
-            $saran = -1;
+            $quantity_arrival = -1;
             $active = -1;
 
             while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
                 if($i>0){
-                    if($district<0 or $name<0 or $id<0 or $mota<0 or $patla<0 or $saran<0 or $latitude<0 or $longitude<0 or $active<0){
+                    if($district<0 or $name<0 or $id<0 or $quantity_arrival<0 or $latitude<0 or $longitude<0 or $active<0){
                         echo "Error : You have modified Template Header, please check";
                         exit();
                     }
@@ -121,11 +117,7 @@ try{
                         $redirect = 0;
                     }
 
-                    if(!isStringNumber($column[$saran])){
-                        echo "Error : Check Saran Value: ".$column[$saran];
-                        echo "</br>";
-                        $redirect = 0;
-                    }
+
                     
                     if (!is_numeric($column[$latitude]) || $column[$latitude] >= 40) {
 						echo "Error : Latitude must be less than 40. Given: " . $column[$latitude];
@@ -139,14 +131,23 @@ try{
 						echo "</br>";
 						$redirect = 0;
 					}
-					if (
-						!isset($column[$id]) ||
-						!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
-					) {
-						echo "Error: PC ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
-						echo "<br>";
-						$redirect = 0;
-					}	
+                if (
+					!isset($column[$name]) ||
+					!preg_match('/^[a-zA-Z0-9_\- ]+$/', $column[$name])
+				) {
+					echo "Error: Name should only contain characters, numbers, underscores, hyphens, and spaces: " . ($column[$name] ?? 'Missing');
+					echo "<br>";
+					$redirect = 0;
+				}
+
+                if (
+					!isset($column[$id]) ||
+					!preg_match('/^[a-zA-Z0-9_\-]+$/', $column[$id])
+				) {
+					echo "Error: PC ID should only contain characters, numbers, underscores, and hyphens (no spaces): " . ($column[$id] ?? 'Missing');
+					echo "<br>";
+					$redirect = 0;
+				}
                     if(!in_array($column[$district], $districts)){
                         echo "Error : Check District Name: ".$column[$district];
                         echo "</br>";
@@ -157,14 +158,17 @@ try{
                         echo "</br>";
                         $redirect = 0;
                     }
+
+                    if (!is_numeric($column[$quantity_arrival])) {
+                        echo "Error : Quantity Arrival must be numeric<br>";
+                        $redirect = 0;
+                    }
                     $PC = new PC;
                     filterData($column[$latitude]);
                     filterData($column[$longitude]);
                     filterData($column[$name]);
                     filterData($column[$id]);
-                    filterData($column[$mota]);
-                    filterData($column[$patla]);
-                    filterData($column[$saran]);
+                    filterData($column[$quantity_arrival]);
                     filterData($column[$active]);
 
                     $PC->setDistrict(ucwords(strtolower($column[$district])));
@@ -172,9 +176,7 @@ try{
                     $PC->setLongitude($column[$longitude]);
                     $PC->setName($column[$name]);
                     $PC->setId($column[$id]);
-                    $PC->setMota($column[$mota]);
-                    $PC->setPatla($column[$patla]);
-                    $PC->setSaran($column[$saran]);
+                    $PC->setQuantityArrival($column[$quantity_arrival]);
                     $PC->setActive($column[$active]);
                     $query_check = $PC->checkEdit($PC);
                     $query_result = mysqli_query($con, $query_check);
@@ -204,15 +206,8 @@ try{
                                 $id = $j;
                                 break;
                             
-                            case $reverseMapData["mota"]:
-                                $mota = $j;
-                                break;
-                            
-                            case $reverseMapData["patla"]:
-                                $patla = $j;
-                                break;
-                            case $reverseMapData["saran"]:
-                                $saran = $j;
+                            case $reverseMapData["quantity_arrival"]:
+                                $quantity_arrival = $j;
                                 break;
                             case $reverseMapData["active"]:
                                 $active = $j;
@@ -249,9 +244,7 @@ try{
             $id = -1;
             $latitude = -1;
             $longitude = -1;
-            $mota = -1;
-            $patla = -1;
-            $saran = -1;
+            $quantity_arrival = -1;
             $active = -1;
 
             while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
@@ -262,9 +255,7 @@ try{
                     filterData($column[$longitude]);
                     filterData($column[$name]);
                     filterData($column[$id]);
-                    filterData($column[$mota]);
-                    filterData($column[$patla]);
-                    filterData($column[$saran]);
+                    filterData($column[$quantity_arrival]);
                     filterData($column[$active]);
 
                     $PC->setDistrict($column[$district]);
@@ -272,9 +263,7 @@ try{
                     $PC->setLongitude($column[$longitude]);
                     $PC->setName($column[$name]);
                     $PC->setId($column[$id]);
-                    $PC->setMota($column[$mota]);
-                    $PC->setPatla($column[$patla]);
-                    $PC->setSaran($column[$saran]);
+                    $PC->setQuantityArrival($column[$quantity_arrival]);
                     $PC->setActive($column[$active]);
                     $query_check = $PC->checkEdit($PC);
                     $query_result = mysqli_query($con, $query_check);
@@ -306,14 +295,8 @@ try{
                             case $reverseMapData["id"]:
                                 $id = $j;
                                 break;
-                            case $reverseMapData["mota"]:
-                                $mota = $j;
-                                break;
-                            case $reverseMapData["patla"]:
-                                $patla = $j;
-                                break;
-                            case $reverseMapData["saran"]:
-                                $saran = $j;
+                            case $reverseMapData["quantity_arrival"]:
+                                $quantity_arrival = $j;
                                 break;
                             case $reverseMapData["active"]:
                                 $active = $j;

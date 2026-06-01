@@ -16,7 +16,7 @@ if(!SessionCheck()){
 require('Header.php');
 
 function formatName($name) {
-	$name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -78,9 +78,29 @@ if (
 
 $errors = [];
 
-if(!isStringNumber($_POST["saran"])){
-	echo "Error : Check Saran Value";
-	exit();
+// Validate Quantity Arrival
+if (!is_numeric($_POST["quantity_arrival"])) {
+    $errors[] = "Error : Invalid Quantity Arrival";
+}
+
+// If any error exists, print all and stop
+if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo $error . "<br>";
+    }
+    exit();
+}
+
+// Validate Name
+if (!preg_match('/^[a-zA-Z0-9_\- ]+$/', $_POST["name"])) {
+    echo "Error : Name should only contain characters, numbers, underscores, hyphens, and spaces.";
+    exit();
+}
+
+// Validate ID
+if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $_POST["id"])) {
+    echo "Error : ID should only contain characters, numbers, underscores, and hyphens (no spaces).";
+    exit();
 }
 
 $dbHashedPassword = $row['password'];
@@ -91,10 +111,7 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $longitude = $_POST["longitude"];
     $name = formatName($_POST["name"]);
     $id = $_POST["id"];
-    $mota = $_POST["mota"];
-    $patla = $_POST["patla"];
-
-    $saran = $_POST["saran"];
+    $quantity_arrival = $_POST["quantity_arrival"];
     $uniqueid = $_POST["uniqueid"];
     $active = $_POST["active"];
 
@@ -105,9 +122,7 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $PC->setLongitude($longitude);
     $PC->setName($name);
     $PC->setId($id);
-    $PC->setMota($mota);
-    $PC->setPatla($patla);
-    $PC->setSaran($saran);
+    $PC->setQuantityArrival($quantity_arrival);
     $PC->setActive($active);
 
     $query_check = $PC->checkInsert($PC);

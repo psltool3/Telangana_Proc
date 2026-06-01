@@ -80,36 +80,13 @@ require('Header.php');
                                             </div>
 											
 											<div class="form-group">
-                                                <label class="col-md-3 control-label">Mota*</label>
+                                                <label class="col-md-3 control-label">Quantity Arrival*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="mota" name="mota" required />
+                                                        <input type="text" class="form-control" id="quantity_arrival" name="quantity_arrival" required />
                                                     </div>
-                                                    <span class="help-block">Mota</span>
-                                                </div>
-                                            </div>
-											
-											<div class="form-group">
-                                                <label class="col-md-3 control-label">Patla*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="patla" name="patla" required />
-                                                    </div>
-                                                    <span class="help-block">Patla</span>
-                                                </div>
-                                            </div>
-
-											
-											<div class="form-group">
-                                                <label class="col-md-3 control-label">Saran*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="saran" name="saran" required />
-                                                    </div>
-                                                    <span class="help-block">Saran</span>
+                                                    <span class="help-block">Quantity Arrival</span>
                                                 </div>
                                             </div>
 											
@@ -267,16 +244,18 @@ require('Header.php');
 			var latitude = document.getElementById('latitude').value;
             var longitude = document.getElementById('longitude').value;
 			var id = document.getElementById('id').value;
-			var mota = document.getElementById('mota').value;
-            var patla = document.getElementById('patla').value;
-            var saran = document.getElementById('saran').value;
+			var quantity_arrival = document.getElementById('quantity_arrival').value;
             var district = document.getElementById('district').value;
             //var pctype = document.getElementById('pctype').value;
 
-            if (name === '' || latitude === '' || longitude === '' || id === '' || mota === '' || patla === '' || saran === '' || district === '') {
+            if (name === '' || latitude === '' || longitude === '' || id === '' || quantity_arrival === '' || district === '') {
                 alert('Please enter all fields');
                 return false;
             }
+
+            
+
+            
 			
             document.getElementById('popup').style.display = 'block';
         }

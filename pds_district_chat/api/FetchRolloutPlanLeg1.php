@@ -8,7 +8,13 @@ if(!SessionCheck()){
 	return;
 }
 
-$query = "SELECT * FROM optimised_table_leg1 ORDER BY last_updated DESC LIMIT 1";
+$month_full = $_POST['month'];
+$parts = explode('_', $month_full);
+$year = $parts[0]; 
+$month = $parts[1];
+$day = $parts[2];
+
+$query = "SELECT * FROM optimised_table_leg1 WHERE month='$month' AND year='$year' AND day='$day'";
 $result = mysqli_query($con,$query);
 $response = array();
 $id = "";
@@ -27,11 +33,11 @@ $result = $con->query($query);
 
 
 if ($result && $result->num_rows > 0) {
-	$query_implemented = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND status='implemented'";
+	$query_implemented = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND status='implemented' AND (approve_admin='yes' OR approve_admin='no')";
 	$result_implemented = mysqli_query($con,$query_implemented);
 	$count_implemented = mysqli_num_rows($result_implemented);
 	
-	$query_notimplemented = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND status IS NULL";
+	$query_notimplemented = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND (status IS NULL OR status='')";
 	$result_notimplemented = mysqli_query($con,$query_notimplemented);
 	$count_notimplemented = mysqli_num_rows($result_notimplemented);
 	
@@ -40,7 +46,7 @@ if ($result && $result->num_rows > 0) {
 		$query = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND status='implemented'";
 	}
 	else if($status=="not implemented"){
-		$query = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND status IS NULL";
+		$query = "SELECT * FROM ".$tablename." WHERE to_district='$district' AND (status IS NULL OR status='')";
 	}
 	
 	$result = mysqli_query($con,$query);

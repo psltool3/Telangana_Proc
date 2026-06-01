@@ -58,7 +58,8 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 												<th style="font-size:15px">Warehouse Type</th>
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Allocated(Qtl)</th>
+												<th style="font-size:15px">Requirement (Qtl)</th>
+												<th style="font-size:15px">Storage Capacity (Qtl)</th>
 												
                                             </tr>
                                         </thead>
@@ -71,11 +72,6 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 										$numrows = mysqli_num_rows($result);
 										while($row = mysqli_fetch_array($result))
 										{
-											$storage = 0;
-											if (isset($row['storage'])) { $storage = $row['storage']; }
-											elseif (isset($row['incoming_min_mota'])) { $storage = $row['incoming_min_mota'] + $row['incoming_min_patla'] + $row['incoming_min_saran']; }
-											elseif (isset($row['mota'])) { $storage = $row['mota'] + $row['patla'] + $row['saran']; }
-											
 											$wtype = isset($row['type']) ? $row['type'] : (isset($row['warehousetype']) ? $row['warehousetype'] : 'N/A');
 											
 											echo "<tr><td>{$row['district']}</td>".
@@ -85,7 +81,8 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 											"<td>{$wtype}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$storage}</td></tr>";
+											"<td>{$row['requirement']}</td>".
+											"<td>{$row['storage_capacity']}</td></tr>";
 										}
 										
 										?>
@@ -150,7 +147,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const csvResponse = await fetch('api/DownloadOptimalDataWarehouse.php?format=csv&tableName='+tableName);
 				const csvBlob = await csvResponse.blob();
-				downloadFile(csvBlob, 'Chhattisgarh_Warehouse_' + getDateString() + '.csv');
+				downloadFile(csvBlob, 'Telangana_Warehouse_' + getDateString() + '.csv');
 			} catch (error) {
 				console.error('Error downloading CSV file:', error);
 			}
@@ -162,7 +159,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const excelResponse = await fetch('api/DownloadOptimalDataWarehouse.php?format=xlsx&tableName='+tableName);
 				const excelBlob = await excelResponse.blob();
-				downloadFile(excelBlob, 'Chhattisgarh_Warehouse_' + getDateString() + '.xlsx');
+				downloadFile(excelBlob, 'Telangana_Warehouse_' + getDateString() + '.xlsx');
 			} catch (error) {
 				console.error('Error downloading XLSX file:', error);
 			}
@@ -178,7 +175,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				const url = window.URL.createObjectURL(pdfBlob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'Chhattisgarh_Warehouse_' + getDateString() + '.pdf';
+				link.download = 'Telangana_Warehouse_' + getDateString() + '.pdf';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			} catch (error) {

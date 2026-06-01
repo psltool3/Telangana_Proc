@@ -7,7 +7,7 @@ require('api/fpdf/fpdf.php');
 
 $columns_pdf = ["scenario","from","from_state","from_id","from_name","from_district","from_lat","from_long","to","to_state","to_id","to_name","to_district","to_lat","to_long","commodity","quantity","distance","status"];
 
-$filename = 'Chhattisgarh_data';
+$filename = 'Telangana_data';
 
 $id = $_POST['id'];
 $tablename = "optimiseddata_leg1_".$id;

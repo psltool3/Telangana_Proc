@@ -76,9 +76,9 @@ if($numrows>0){
 					<li <?php if ($currentFile == 'Mill.php') echo 'class="active"'; ?>>
 						<a href="Mill.php"> <span class="xn-text">Mill</span></a>
 					</li>
-					<li <?php if ($currentFile == 'MillReplica.php') echo 'class="active"'; ?>>
+					<!--<li <?php if ($currentFile == 'MillReplica.php') echo 'class="active"'; ?>>
 						<a href="MillReplica.php"> <span class="xn-text">Mill Inter</span></a>
-					</li>
+					</li>-->
 					<li <?php if ($currentFile == 'Warehouse.php') echo 'class="active"'; ?>>
 						<a href="Warehouse.php"> <span class="xn-text">Warehouse</span></a>
 					</li>

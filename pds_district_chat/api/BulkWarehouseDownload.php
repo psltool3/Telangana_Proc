@@ -3,12 +3,15 @@ require('../util/Connection.php');
 require('../structures/Warehouse.php');
 require('../util/SessionFunction.php');
 require('../structures/Login.php');
-session_start();
-ini_set('max_execution_time', 3000);
-require('../util/Logger.php');
 require('../util/Security.php');
 require ('../util/Encryption.php');
+require('../util/Logger.php');
 $nonceValue = 'nonce_value';
+
+if(!SessionCheck()){
+	return;
+}
+
 
 $mapData = [
     "District" => "district",
@@ -18,12 +21,8 @@ $mapData = [
     "Warehouse Type" => "warehousetype",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Normal Rice" => "normal_rice",
-    "State FRK Rice" => "state_frk_rice",
-    "Central FRK Rice" => "central_frk_rice",
-    "Storage Rice" => "storage_rice",
-    "Storage State FRK Rice" => "storage_state_frk_rice",
-    "Storage Central FRK Rice" => "storage_central_frk_rice",
+    "Requirement" => "requirement",
+    "Storage Capacity" => "storage_capacity",
 	"Active/Not-Active" => "active"
 ];
 

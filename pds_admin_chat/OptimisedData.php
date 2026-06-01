@@ -107,7 +107,7 @@ while($row = mysqli_fetch_array($result))
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li class="active">Chhattisgarh PDS Optimised Plan</li>
+                    <li class="active">Telangana PDS Optimised Plan</li>
                 </ul>
                 <!-- END BREADCRUMB -->
 
@@ -711,7 +711,12 @@ while($row = mysqli_fetch_array($result))
 										var approve_district_change = "<td><button class='btn btn-danger'>Not Approved</button></td>";
 									}
 									else{
-										var approve_district_change = "<td><select class='form-control' onchange='enableDisableApprove(\"" + uniqueid_idapprove + "\")' id='" + uniqueid_idapprove + "' name='" + uniqueid_idapprove + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='no'>Not Approve</option></select></td>";
+										if(approve_district=="yes"){
+											var approve_district_change = "<td><select class='form-control' onchange='enableDisableApprove(\"" + uniqueid_idapprove + "\")' id='" + uniqueid_idapprove + "' name='" + uniqueid_idapprove + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='no'>Not Approve</option></select></td>";
+										}
+										else{
+											var approve_district_change = "<td><button class='btn btn-warning' disabled>District Implementation Pending</button></td>";
+										}
 									}
 								}
 								else{
@@ -726,7 +731,12 @@ while($row = mysqli_fetch_array($result))
 										var approve_district_change = "<td><button class='btn btn-danger'>Not Approved</button></td>";
 									}
 									else{
-										var approve_district_change = "<td><select class='form-control' onchange='enableDisableApprove(\"" + uniqueid_idapprove + "\")' id='" + uniqueid_idapprove + "' name='" + uniqueid_idapprove + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='no'>Not Approve</option></select></td>";
+										if(approve_district=="yes" || approve_district=="no"){
+											var approve_district_change = "<td><select class='form-control' onchange='enableDisableApprove(\"" + uniqueid_idapprove + "\")' id='" + uniqueid_idapprove + "' name='" + uniqueid_idapprove + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='no'>Not Approve</option></select></td>";
+										}
+										else{
+											var approve_district_change = "<td><button class='btn btn-warning' disabled>District Implementation Pending</button></td>";
+										}
 									}
 								}
 								else{
@@ -753,8 +763,13 @@ while($row = mysqli_fetch_array($result))
 									var approve_admin_part = "<td><button class='btn btn-warning'>System Generated</button></td>";
 								}
 								else{
-									var approve_admin_part = "<td><select class='form-control' onchange='enableDisable(\"" + uniqueid + "\")' id='" + uniqueid_bool + "' name='" + uniqueid_bool + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='same'>System Generated</option></select></td>";
-									uniqueid_array.push(uniqueid_bool);
+									if(approve_district=="yes" || approve_district=="no"){
+										var approve_admin_part = "<td><select class='form-control' onchange='enableDisable(\"" + uniqueid + "\")' id='" + uniqueid_bool + "' name='" + uniqueid_bool + "' required><option value=''>Select</option><option value='yes'>Approve</option><option value='same'>System Generated</option></select></td>";
+										uniqueid_array.push(uniqueid_bool);
+									}
+									else{
+										var approve_admin_part = "<td><button class='btn btn-warning' disabled>District Implementation Pending</button></td>";
+									}
 								}
 
 								if(approve_district==""){

@@ -8,9 +8,7 @@ class PC {
     public $type;
     public $latitude;
     public $longitude;
-    public $mota;
-    public $patla;
-    public $saran;
+    public $quantity_arrival;
     public $uniqueid;
     public $active;
 
@@ -44,16 +42,8 @@ class PC {
         return $this->longitude;
     }
 
-    public function getMota() {
-        return $this->mota;
-    }
-
-    public function getPatla() {
-        return $this->patla;
-    }
-
-    public function getSaran() {
-        return $this->saran;
+    public function getQuantityArrival() {
+        return $this->quantity_arrival;
     }
 	
 	public function getUniqueid() {
@@ -95,16 +85,8 @@ class PC {
         $this->longitude = $longitude;
     }
 
-    public function setMota($mota) {
-        $this->mota = $mota;
-    }
-
-    public function setPatla($patla) {
-        $this->patla = $patla;
-    }
-
-    public function setSaran($saran) {
-        $this->saran = $saran;
+    public function setQuantityArrival($quantity_arrival) {
+        return $this->quantity_arrival = $quantity_arrival;
     }
 	
 	public function setUniqueid($uniqueid) {
@@ -116,7 +98,7 @@ class PC {
     }
 	
 	function insert(PC $pc){
-        return "INSERT INTO pc (district, name, id, latitude, longitude, mota, patla, saran, uniqueid, active) VALUES ('".$pc->getDistrict()."','".$pc->getName()."','".$pc->getId()."','".$pc->getLatitude()."','".$pc->getLongitude()."','".$pc->getMota()."','".$pc->getPatla()."','".$pc->getSaran()."','".$pc->getUniqueid()."','".$pc->getActive()."')";
+        return "INSERT INTO pc (district, name, id, latitude, longitude, quantity_arrival, uniqueid, active) VALUES ('".$pc->getDistrict()."','".$pc->getName()."','".$pc->getId()."','".$pc->getLatitude()."','".$pc->getLongitude()."','".$pc->getQuantityArrival()."','".$pc->getUniqueid()."','".$pc->getActive()."')";
     }
 
     function delete(PC $pc){
@@ -146,11 +128,11 @@ class PC {
     }
 
     function update(PC $pc){
-      return  "UPDATE pc SET district = '".$pc->getDistrict()."',name = '".$pc->getName()."',id = '".$pc->getId()."',latitude = '".$pc->getLatitude()."',longitude = '".$pc->getLongitude()."',mota = '".$pc->getMota()."',patla = '".$pc->getPatla()."',saran = '".$pc->getSaran()."',active = '".$pc->getActive()."' WHERE uniqueid = '".$pc->getUniqueid()."'";
+      return  "UPDATE pc SET district = '".$pc->getDistrict()."',name = '".$pc->getName()."',id = '".$pc->getId()."',latitude = '".$pc->getLatitude()."',longitude = '".$pc->getLongitude()."',quantity_arrival = '".$pc->getQuantityArrival()."',active = '".$pc->getActive()."' WHERE uniqueid = '".$pc->getUniqueid()."'";
     }
 	
 	function updateEdit(PC $pc){
-      return  "UPDATE pc SET district = '".$pc->getDistrict()."',name = '".$pc->getName()."',latitude = '".$pc->getLatitude()."',longitude = '".$pc->getLongitude()."',mota = '".$pc->getMota()."',patla = '".$pc->getPatla()."',saran = '".$pc->getSaran()."',active = '".$pc->getActive()."' WHERE id = '".$pc->getId()."'";
+      return  "UPDATE pc SET district = '".$pc->getDistrict()."',name = '".$pc->getName()."',latitude = '".$pc->getLatitude()."',longitude = '".$pc->getLongitude()."',quantity_arrival = '".$pc->getQuantityArrival()."',active = '".$pc->getActive()."' WHERE id = '".$pc->getId()."'";
     }
 }
 

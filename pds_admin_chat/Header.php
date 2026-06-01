@@ -13,7 +13,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<!-- <script> var pythonUrl = "http://103.148.165.96:5000/"; var directory = "" </script> -->
 		<script> var pythonUrl = "http://localhost:5000/"; var directory = "" </script>
+
 								
 		<style>
 		.popup {
@@ -61,7 +63,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <!-- START X-NAVIGATION -->
 			<ul class="x-navigation">
 				<li class="xn-logo">
-					<span style="font-size: 19px; text-align: center; margin: 10px;color:#fff">Chhattisgarh State Level</span>
+					<span style="font-size: 19px; text-align: center; margin: 10px;color:#fff">Telangana State Level</span>
 					<a href="#" class="x-navigation-control"></a>
 				</li>
 				<li class="xn-profile">
@@ -156,9 +158,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
 				<li>
 					<a href="Mill.php" style="padding-left:0px"><span class="xn-text" style="font-family:sans-serif;font-weight:italic;font-size:16px;">Edit Mill</span></a>
 				</li>
-				<li>
+				<!--<li>
 					<a href="MillReplica.php" style="padding-left:0px"><span class="xn-text" style="font-family:sans-serif;font-weight:italic;font-size:16px;">Edit Mill Inter</span></a>
-				</li>
+				</li>-->
 				<!--<li>
 					<a href="StoragePoint.php" style="padding-left:0px"><span class="xn-text" style="font-family:sans-serif;font-weight:italic;font-size:16px;">Edit Storage Point</span></a>
 				</li>-->

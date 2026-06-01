@@ -58,15 +58,10 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 												<th style="font-size:15px">Type</th>
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Incoming Mota</th>
-												<th style="font-size:15px">Incoming Patla</th>
-												<th style="font-size:15px">Incoming Saran</th>
-												<th style="font-size:15px">Outgoing Mota</th>
-												<th style="font-size:15px">Outgoing Patla</th>
-												<th style="font-size:15px">Outgoing Saran</th>
-												<th style="font-size:15px">Milling Capacity Mota</th>
-												<th style="font-size:15px">Milling Capacity Patla</th>
-												<th style="font-size:15px">Milling Capacity Saran</th>
+												<th style="font-size:15px">Incoming Min Paddy</th>
+												<th style="font-size:15px">Total Rice Inventory</th>
+												<th style="font-size:15px">Milling Capacity</th>
+												<th style="font-size:15px">Minimum Outgoing Rice</th>
 												<th style="font-size:15px">Active</th>
                                             </tr>
                                         </thead>
@@ -86,15 +81,10 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 											"<td>{$row['type']}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$row['incoming_min_mota']}</td>".
-											"<td>{$row['incoming_min_patla']}</td>".
-											"<td>{$row['incoming_min_saran']}</td>".
-											"<td>{$row['outgoing_min_mota']}</td>".
-											"<td>{$row['outgoing_min_patla']}</td>".
-											"<td>{$row['outgoing_min_saran']}</td>".
+											"<td>{$row['incoming_min_paddy']}</td>".
+											"<td>{$row['total_rice_inventory']}</td>".
 											"<td>{$row['milling_capacity']}</td>".
-											"<td>{$row['milling_capacity1']}</td>".
-											"<td>{$row['milling_capacity2']}</td>".
+											"<td>{$row['minimum_outgoing_rice']}</td>".
 											"<td>{$row['active']}</td></tr>";
 										}
 										
@@ -160,7 +150,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const csvResponse = await fetch('api/DownloadOptimalDataMill.php?format=csv&tableName='+tableName);
 				const csvBlob = await csvResponse.blob();
-				downloadFile(csvBlob, 'Chhattisgarh_Mill_' + getDateString() + '.csv');
+				downloadFile(csvBlob, 'Telangana_Mill_' + getDateString() + '.csv');
 			} catch (error) {
 				console.error('Error downloading CSV file:', error);
 			}
@@ -172,7 +162,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const excelResponse = await fetch('api/DownloadOptimalDataMill.php?format=xlsx&tableName='+tableName);
 				const excelBlob = await excelResponse.blob();
-				downloadFile(excelBlob, 'Chhattisgarh_Mill_' + getDateString() + '.xlsx');
+				downloadFile(excelBlob, 'Telangana_Mill_' + getDateString() + '.xlsx');
 			} catch (error) {
 				console.error('Error downloading XLSX file:', error);
 			}
@@ -188,7 +178,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				const url = window.URL.createObjectURL(pdfBlob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'Chhattisgarh_Mill_' + getDateString() + '.pdf';
+				link.download = 'Telangana_Mill_' + getDateString() + '.pdf';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			} catch (error) {

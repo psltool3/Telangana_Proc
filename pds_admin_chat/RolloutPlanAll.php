@@ -439,7 +439,7 @@ require('Header.php');
 						
 						for (var dataField in obj) {
 							var status = "Not Implemented";
-							if(obj[dataField]["status"]=="implemented"){
+							if(obj[dataField]["status"] && obj[dataField]["status"].toLowerCase()=="implemented"){
 								status = "Implemented"
 							}
 							

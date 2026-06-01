@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 if (isset($_GET['format'])) {
     $format = $_GET['format'];
     
-    $columns = ["district","name","id","warehousetype","latitude","longitude","storage"];
+    $columns = ["district","name","id","type","latitude","longitude","requirement","storage_capacity"];
     $tablename = $_GET['tableName'];
 	
 	$tableData = array();

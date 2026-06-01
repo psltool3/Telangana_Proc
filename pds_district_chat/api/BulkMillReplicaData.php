@@ -56,6 +56,47 @@ $districts = [];
 $query = "SELECT name FROM districts WHERE 1";
 $result = mysqli_query($con,$query);
 $numrows = mysqli_num_rows($result);
+    "To District" => "to_district",
+    "Name of Mill Inter" => "name",
+    "Mill Inter ID" => "id",
+    "Mill Inter Type" => "type",
+    "Latitude" => "latitude",
+    "Longitude" => "longitude",
+    "Incoming Minimum of Mota" => "incoming_min_mota",
+    "Incoming Minimum of Patla" => "incoming_min_patla",
+    "Incoming Minimum of Saran" => "incoming_min_saran",
+    "Total Normal Rice (Qtl) Inventory" => "outgoing_min_mota",
+    "Total State FRK Rice (Qtl) Inventory" => "outgoing_min_patla",
+    "Total Central FRK Rice(Qtl) Inventory" => "outgoing_min_saran",
+    "Milling Capacity Mota" => "milling_capacity",
+    "Milling Capacity Patla" => "milling_capacity1",
+    "Milling Capacity Saran" => "milling_capacity2",
+	"Active/Not-Active" => "active"
+];
+
+// Reverse mapping
+$reverseMapData = array_flip($mapData);
+
+$person = new Login;
+$person->setUsername($_POST["username"]);
+$Encryption = new Encryption();
+$person->setPassword($Encryption->decrypt($_POST["password"], $nonceValue));
+
+if($_SESSION['district_user']!=$person->getUsername()){
+	echo "User is logged in with different username and password";
+	return;
+}
+
+$query = "SELECT * FROM login WHERE username='".$person->getUsername()."'";
+$result = mysqli_query($con,$query);
+$row = mysqli_fetch_assoc($result);
+
+$dbHashedPassword = $row['password'];
+if(password_verify($person->getPassword(), $dbHashedPassword)){
+$districts = [];
+$query = "SELECT name FROM districts WHERE 1";
+$result = mysqli_query($con,$query);
+$numrows = mysqli_num_rows($result);
 if($numrows>0){
 	while($row=mysqli_fetch_assoc($result)){
 		array_push($districts,$row["name"]);
@@ -63,7 +104,7 @@ if($numrows>0){
 }
 
 function formatName($name) {
-	$name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -139,31 +180,6 @@ try{
 					echo "Error : Check To District Name: ".$column[$to_district];
 					echo "</br>";
 					$redirect = 0;
-				}
-				if (!is_numeric($column[$latitude]) || $column[$latitude] >= 40) {
-					echo "Error : Latitude must be less than 40. Given: " . $column[$latitude];
-					echo "</br>";
-					$redirect = 0;
-				}
-
-				// Longitude check (must be more than 65)
-				if (!is_numeric($column[$longitude]) || $column[$longitude] <= 65) {
-					echo "Error : Longitude must be more than 65. Given: " . $column[$longitude];
-					echo "</br>";
-					$redirect = 0;
-				}
-                if (
-					!isset($column[$id]) ||
-					!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
-				) {
-					echo "Error: Mill Inter ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
-					echo "<br>";
-					$redirect = 0;
-				}	
-				
-				if (
-					!is_numeric($column[$incoming_min_mota]) ||
-					!is_numeric($column[$milling_capacity])
 				) {
 					echo "Error : Incoming Min Mota and Milling Capacity must be numeric. "
 					   . "Given Incoming Min Mota: " . $column[$incoming_min_mota]

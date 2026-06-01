@@ -20,9 +20,7 @@ $mapData = [
     "PC ID"              => "id",
     "Latitude"           => "latitude",
     "Longitude"          => "longitude",
-    "Mota"               => "mota",
-    "Patla"              => "patla",
-    "Saran"              => "saran",
+    "Quantity Arrival"    => "quantity_arrival",
     "Active/Not-Active"  => "active"
 ];
 
@@ -85,7 +83,7 @@ try {
     $file = fopen($fileName, "r");
     $i = 0;
 
-    $district = $name = $id = $latitude = $longitude = $mota = $patla = $saran = $active = -1;
+    $district = $name = $id = $latitude = $longitude = $quantity_arrival = $active = -1;
 
     while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 
@@ -98,9 +96,7 @@ try {
                     case $reverseMapData["id"]:        $id = $j; break;
                     case $reverseMapData["latitude"]:  $latitude = $j; break;
                     case $reverseMapData["longitude"]: $longitude = $j; break;
-                    case $reverseMapData["mota"]:      $mota = $j; break;
-                    case $reverseMapData["patla"]:     $patla = $j; break;
-                    case $reverseMapData["saran"]:     $saran = $j; break;
+                    case $reverseMapData["quantity_arrival"]: $quantity_arrival = $j; break;
                     case $reverseMapData["active"]:    $active = $j; break;
                 }
             }
@@ -108,7 +104,7 @@ try {
             if (
                 $district < 0 || $name < 0 || $id < 0 ||
                 $latitude < 0 || $longitude < 0 ||
-                $mota < 0 || $patla < 0 || $saran < 0 || $active < 0
+                $quantity_arrival < 0 || $active < 0
             ) {
                 echo "Error : You have modified Template Header, please check";
                 exit();
@@ -122,10 +118,7 @@ try {
                 $redirect = 0;
             }
 
-            if (!isNumber($column[$mota]) || !isNumber($column[$patla]) || !isNumber($column[$saran])) {
-                echo "Error : Mota / Patla / Saran must be numeric<br>";
-                $redirect = 0;
-            }
+
 
             if (!in_array($column[$district], $districts)) {
                 echo "Error : Invalid District - ".$column[$district]."<br>";
@@ -143,17 +136,31 @@ try {
 				echo "</br>";
 				$redirect = 0;
 			}
+            if (
+				!isset($column[$name]) ||
+				!preg_match('/^[a-zA-Z0-9_\- ]+$/', $column[$name])
+			) {
+				echo "Error: Name should only contain characters, numbers, underscores, hyphens, and spaces: " . ($column[$name] ?? 'Missing');
+				echo "<br>";
+				$redirect = 0;
+			}
+
 			if (
 				!isset($column[$id]) ||
-				!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
+				!preg_match('/^[a-zA-Z0-9_\-]+$/', $column[$id])
 			) {
-				echo "Error: PC ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
+				echo "Error: ID should only contain characters, numbers, underscores, and hyphens (no spaces): " . ($column[$id] ?? 'Missing');
 				echo "<br>";
 				$redirect = 0;
 			}	
 
             if (!($column[$active] == 0 || $column[$active] == 1)) {
                 echo "Error : Active value must be 0 or 1<br>";
+                $redirect = 0;
+            }
+
+            if (!is_numeric($column[$quantity_arrival])) {
+                echo "Error : Quantity Arrival must be numeric<br>";
                 $redirect = 0;
             }
         }
@@ -187,9 +194,7 @@ while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
         $PC->setId($column[$id]);
         $PC->setLatitude($column[$latitude]);
         $PC->setLongitude($column[$longitude]);
-        $PC->setMota($column[$mota]);
-        $PC->setPatla($column[$patla]);
-        $PC->setSaran($column[$saran]);
+        $PC->setQuantityArrival($column[$quantity_arrival]);
         $PC->setActive($column[$active]);
 
         if (mysqli_num_rows(mysqli_query($con, $PC->checkInsert($PC))) == 0) {

@@ -87,17 +87,10 @@ $district = $_SESSION['district_district'];
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
                                                 
-												<th style="font-size:15px">Incoming Min Mota</th>
-                                                <th style="font-size:15px">Incoming Min Patla</th>
-                                                <th style="font-size:15px">Incoming Min Saran</th>
-                                                
-                                                <th style="font-size:15px">Total Normal Rice (Qtl) Inventory</th>
-                                                <th style="font-size:15px">Total State FRK Rice (Qtl) Inventory</th>
-                                                <th style="font-size:15px">Total Central FRK Rice(Qtl) Inventory</th>
-                                                
-												<th style="font-size:15px">Milling Capacity Mota</th>
-                                                <th style="font-size:15px">Milling Capacity Patla</th>
-                                                <th style="font-size:15px">Milling Capacity Saran</th>
+												<th style="font-size:15px">Incoming Min Paddy</th>
+                                                <th style="font-size:15px">Total Rice Inventory</th>
+                                                <th style="font-size:15px">Milling Capacity</th>
+                                                <th style="font-size:15px">Minimum Outgoing Rice</th>
                                                 
 												<th style="font-size:16px">Status</th>
 												<th style="font-size:16px">Change Status</th>
@@ -128,17 +121,10 @@ $district = $_SESSION['district_district'];
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
                                             
-                                            "<td>{$row['incoming_min_mota']}</td>".
-                                            "<td>{$row['incoming_min_patla']}</td>".
-                                            "<td>{$row['incoming_min_saran']}</td>".
-                                            
-                                            "<td>{$row['outgoing_min_mota']}</td>".
-                                            "<td>{$row['outgoing_min_patla']}</td>".
-                                            "<td>{$row['outgoing_min_saran']}</td>".
-                                            
-											"<td>{$row['milling_capacity']}</td>".
-                                            "<td>{$row['milling_capacity1']}</td>".
-                                            "<td>{$row['milling_capacity2']}</td>".
+                                            "<td>{$row['incoming_min_paddy']}</td>".
+                                            "<td>{$row['total_rice_inventory']}</td>".
+                                            "<td>{$row['milling_capacity']}</td>".
+                                            "<td>{$row['minimum_outgoing_rice']}</td>".
                                             
 											"<td>$status</td>".
 											 "<td> <button class='btn btn-info btn-rounded' onclick=\"change_status('{$temp_id}')\">Change Status</button></td>".

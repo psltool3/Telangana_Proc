@@ -80,68 +80,24 @@ require('Header.php');
                                             </div>
 											
 											<div class="form-group">
-                                                <label class="col-md-3 control-label">Normal Rice (Qtl)*</label>
+                                                <label class="col-md-3 control-label">Requirement (Qtl)*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="normal_rice" name="normal_rice" required />
+                                                        <input type="text" class="form-control" id="requirement" name="requirement" required />
                                                     </div>
-                                                    <span class="help-block">Normal Rice</span>
+                                                    <span class="help-block">Requirement</span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label">State FRK Rice (Qtl)*</label>
+                                                <label class="col-md-3 control-label">Storage Capacity (Qtl)*</label>
                                                 <div class="col-md-9">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="state_frk_rice" name="state_frk_rice" required />
+                                                        <input type="text" class="form-control" id="storage_capacity" name="storage_capacity" required />
                                                     </div>
-                                                    <span class="help-block">State FRK Rice</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Central FRK Rice (Qtl)*</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="central_frk_rice" name="central_frk_rice" required />
-                                                    </div>
-                                                    <span class="help-block">Central FRK Rice</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Storage Rice (Qtl)</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="storage_rice" name="storage_rice" />
-                                                    </div>
-                                                    <span class="help-block">Storage Rice</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Storage State FRK Rice (Qtl)</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="storage_state_frk_rice" name="storage_state_frk_rice" />
-                                                    </div>
-                                                    <span class="help-block">Storage State FRK Rice</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label">Storage Central FRK Rice (Qtl)</label>
-                                                <div class="col-md-9">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa-info"></span></span>
-                                                        <input type="text" class="form-control" id="storage_central_frk_rice" name="storage_central_frk_rice" />
-                                                    </div>
-                                                    <span class="help-block">Storage Central FRK Rice</span>
+                                                    <span class="help-block">Storage Capacity</span>
                                                 </div>
                                             </div>
 										
@@ -300,16 +256,19 @@ require('Header.php');
 			var latitude = document.getElementById('latitude').value;
             var longitude = document.getElementById('longitude').value;
 			var id = document.getElementById('id').value;
-            var normal_rice = document.getElementById('normal_rice').value;
-            var state_frk_rice = document.getElementById('state_frk_rice').value;
-            var central_frk_rice = document.getElementById('central_frk_rice').value;
+            var requirement = document.getElementById('requirement').value;
+            var storage_capacity = document.getElementById('storage_capacity').value;
             var district = document.getElementById('district').value;
             var warehousetype = document.getElementById('warehousetype').value;
 
-            if (name === '' || type === '' || latitude === '' || longitude === '' || id === '' || normal_rice === '' || state_frk_rice === '' || central_frk_rice === '' || district === '' || warehousetype === '') {
+            if (name === '' || type === '' || latitude === '' || longitude === '' || id === '' || requirement === '' || storage_capacity === '' || district === '' || warehousetype === '') {
                 alert('Please enter all fields');
                 return false;
             }
+
+            
+
+            
 			
             document.getElementById('popup').style.display = 'block';
         }

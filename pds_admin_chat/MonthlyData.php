@@ -353,7 +353,7 @@ require('Header.php');
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
 	<li><a href="#">Home</a></li>
-	<li class="active">Punjab Intra Route Optimization For PDS</li>
+	<li class="active">Telangana Intra Movement Optimization For PDS</li>
 </ul>
 <!-- END BREADCRUMB -->
 <div>
@@ -370,7 +370,7 @@ require('Header.php');
 			<!-- START SIMPLE DATATABLE -->
 			<div class="panel panel-default">
 				<div class="panel-heading" style="text-align: center;">
-					<h1 style="font-weight: bold; color: #335566;">Punjab Intra Route Optimization For PDS</h1>
+					<h1 style="font-weight: bold; color: #335566;">Telangana Intra Movement Optimization For PDS</h1>
 
 				</div>
 			</div>

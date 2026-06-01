@@ -21,15 +21,10 @@ $mapData = [
     "Mill Inter Type" => "type",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Incoming Minimum of Mota" => "incoming_min_mota",
-    "Incoming Minimum of Patla" => "incoming_min_patla",
-    "Incoming Minimum of Saran" => "incoming_min_saran",
-    "Total Normal Rice (Qtl) Inventory" => "outgoing_min_mota",
-    "Total State FRK Rice (Qtl) Inventory" => "outgoing_min_patla",
-    "Total Central FRK Rice(Qtl) Inventory" => "outgoing_min_saran",
-    "Milling Capacity Mota" => "milling_capacity",
-    "Milling Capacity Patla" => "milling_capacity1",
-    "Milling Capacity Saran" => "milling_capacity2",
+    "Incoming Min Paddy" => "incoming_min_paddy",
+    "Total Rice Inventory" => "total_rice_inventory",
+    "Milling Capacity" => "milling_capacity",
+    "Minimum Outgoing Rice" => "minimum_outgoing_rice",
 	"Active/Not-Active" => "active"
 ];
 
@@ -63,7 +58,7 @@ if($numrows>0){
 }
 
 function formatName($name) {
-	$name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -107,19 +102,14 @@ try{
 		$type = -3;
 		$latitude = -5;
 		$longitude = -6;
-        $incoming_min_mota = -7;
-        $incoming_min_patla = -8;
-        $incoming_min_saran = -9;
-        $outgoing_min_mota = -10;
-        $outgoing_min_patla = -11;
-        $outgoing_min_saran = -12;
-        $milling_capacity = -13;
-		$milling_capacity1 = -14;
-		$milling_capacity2= -15;
+        $incoming_min_paddy = -7;
+        $total_rice_inventory = -8;
+        $milling_capacity = -9;
+        $minimum_outgoing_rice = -10;
 		$active = -14;
 		while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 			if($i>0){
-				if($district<0 or $to_district<0 or $name<0 or $id<0 or $type<0 or $latitude<0 or $longitude<0 or $incoming_min_mota<0 or $incoming_min_patla<0 or $incoming_min_saran<0 or $outgoing_min_mota<0 or $outgoing_min_patla<0 or $outgoing_min_saran<0 or $milling_capacity<0 or $milling_capacity1<0 or $milling_capacity2<0 or $active<0){
+				if($district<0 or $to_district<0 or $name<0 or $id<0 or $type<0 or $latitude<0 or $longitude<0 or $incoming_min_paddy<0 or $total_rice_inventory<0 or $milling_capacity<0 or $minimum_outgoing_rice<0 or $active<0){
 					echo "Error : You have modified Template Header, please check";
 					exit();
 				}
@@ -152,79 +142,42 @@ try{
 					$redirect = 0;
 				}
                 if (
-					!isset($column[$id]) ||
-					!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
+					!isset($column[$name]) ||
+					!preg_match('/^[a-zA-Z0-9_\- ]+$/', $column[$name])
 				) {
-					echo "Error: Mill Inter ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
+					echo "Error: Name should only contain characters, numbers, underscores, hyphens, and spaces: " . ($column[$name] ?? 'Missing');
+					echo "<br>";
+					$redirect = 0;
+				}
+
+                if (
+					!isset($column[$id]) ||
+					!preg_match('/^[a-zA-Z0-9_\-]+$/', $column[$id])
+				) {
+					echo "Error: ID should only contain characters, numbers, underscores, and hyphens (no spaces): " . ($column[$id] ?? 'Missing');
 					echo "<br>";
 					$redirect = 0;
 				}	
-				if (
-					!is_numeric($column[$incoming_min_mota]) ||
-					!is_numeric($column[$milling_capacity])
-				) {
-					echo "Error : Incoming Min Mota and Milling Capacity must be numeric. "
-					   . "Given Incoming Min Mota: " . $column[$incoming_min_mota]
-					   . ", Milling Capacity Mota: " . $column[$milling_capacity];
-					echo "</br>";
-					$redirect = 0;
-				}
-
-				// Check Incoming Min Mota <= Milling Capacity
-				elseif ((float)$column[$incoming_min_mota] > (float)$column[$milling_capacity]) {
-					echo "Error : Incoming Min Mota (" . $column[$incoming_min_mota] .
-						 ") cannot be greater than Milling Capacity Mota (" . $column[$milling_capacity] . ")";
-					echo "</br>";
-					$redirect = 0;
-				}
-				
-				
-				
-				if (
-					!is_numeric($column[$incoming_min_patla]) ||
-					!is_numeric($column[$milling_capacity1])
-				) {
-					echo "Error : Incoming Min Patla and Milling Capacity Patla must be numeric. "
-					   . "Given Incoming Min Patla: " . $column[$incoming_min_patla]
-					   . ", Milling Capacity Patla: " . $column[$milling_capacity1];
-					echo "</br>";
-					$redirect = 0;
-				}
-
-				// Check Incoming Min Mota <= Milling Capacity
-				elseif ((float)$column[$incoming_min_patla] > (float)$column[$milling_capacity1]) {
-					echo "Error : Incoming Min Patla (" . $column[$incoming_min_patla] .
-						 ") cannot be greater than Milling Capacity Patla (" . $column[$milling_capacity1] . ")";
-					echo "</br>";
-					$redirect = 0;
-				}
-				
-				
-				// Check Incoming Min Mota & Milling Capacity are numeric
-				if (
-					!is_numeric($column[$incoming_min_saran]) ||
-					!is_numeric($column[$milling_capacity2])
-				) {
-					echo "Error : Incoming Min Saran and Milling Capacity Saran must be numeric. "
-					   . "Given Incoming Min Saran: " . $column[$incoming_min_saran]
-					   . ", Milling Capacity Saran: " . $column[$milling_capacity2];
-					echo "</br>";
-					$redirect = 0;
-				}
-
-				// Check Incoming Min Mota <= Milling Capacity
-				elseif ((float)$column[$incoming_min_saran] > (float)$column[$milling_capacity2]) {
-					echo "Error : Incoming Min Saran (" . $column[$incoming_min_saran] .
-						 ") cannot be greater than Milling Capacity Saran (" . $column[$milling_capacity2] . ")";
-					echo "</br>";
-					$redirect = 0;
-				}
-				
-				if(!($column[$active]==0 || $column[$active]==1)){
-					echo "Error : Check value of active/inactive column: ".$column[$active];
-					echo "</br>";
-					$redirect = 0;
-				}
+                if (!is_numeric($column[$incoming_min_paddy]) || !is_numeric($column[$milling_capacity])) {
+                    echo "Error : Incoming Min Paddy and Milling Capacity must be numeric.";
+                    echo "</br>";
+                    $redirect = 0;
+                }
+				 elseif ((float)$column[$incoming_min_paddy] >= (float)$column[$milling_capacity]) {
+                    echo "Error : Milling Capacity must be greater than Incoming Min Paddy.";
+                    echo "</br>";
+                    $redirect = 0;
+                }
+                if (!is_numeric($column[$total_rice_inventory])) {
+                    echo "Error : Total Rice Inventory must be numeric.";
+                    echo "</br>";
+                    $redirect = 0;
+                }
+                if (!is_numeric($column[$minimum_outgoing_rice])) {
+                    echo "Error : Minimum Outgoing Rice must be numeric.";
+                    echo "</br>";
+                    $redirect = 0;
+                }
 			}
 			else{
 				$column[0] = preg_replace('/^\xEF\xBB\xBF/', '', $column[0]);
@@ -251,32 +204,17 @@ try{
 						case $reverseMapData["type"]:
 							$type = $j;
 							break;
-                        case $reverseMapData["incoming_min_mota"]:
-                            $incoming_min_mota = $j;
+                        case $reverseMapData["incoming_min_paddy"]:
+                            $incoming_min_paddy = $j;
                             break;
-                        case $reverseMapData["incoming_min_patla"]:
-                            $incoming_min_patla = $j;
-                            break;
-                        case $reverseMapData["incoming_min_saran"]:
-                            $incoming_min_saran = $j;
-                            break;
-                        case $reverseMapData["outgoing_min_mota"]:
-                            $outgoing_min_mota = $j;
-                            break;
-                        case $reverseMapData["outgoing_min_patla"]:
-                            $outgoing_min_patla = $j;
-                            break;
-                        case $reverseMapData["outgoing_min_saran"]:
-                            $outgoing_min_saran = $j;
+                        case $reverseMapData["total_rice_inventory"]:
+                            $total_rice_inventory = $j;
                             break;
                         case $reverseMapData["milling_capacity"]:
                             $milling_capacity = $j;
                             break;
-                        case $reverseMapData["milling_capacity1"]:
-                            $milling_capacity1 = $j;
-                            break;
-                        case $reverseMapData["milling_capacity2"]:
-                            $milling_capacity2 = $j;
+                        case $reverseMapData["minimum_outgoing_rice"]:
+                            $minimum_outgoing_rice = $j;
                             break;
 						case $reverseMapData["active"]:
 							$active = $j;
@@ -311,19 +249,14 @@ try{
 			$type = -3;
 			$latitude = -5;
 			$longitude = -6;
-            $incoming_min_mota = -7;
-            $incoming_min_patla = -8;
-            $incoming_min_saran = -9;
-            $outgoing_min_mota = -10;
-            $outgoing_min_patla = -11;
-            $outgoing_min_saran = -12;
-            $milling_capacity = -13;
-            $milling_capacity1 = -14;
-            $milling_capacity2 = -15;
+            $incoming_min_paddy = -7;
+            $total_rice_inventory = -8;
+            $milling_capacity = -9;
+            $minimum_outgoing_rice = -10;
 			$active = -14;
 			while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 				if($i>0){
-					if($district<0 or $to_district<0 or $name<0 or $id<0 or $type<0 or $latitude<0 or $longitude<0 or $incoming_min_mota<0 or $incoming_min_patla<0 or $incoming_min_saran<0 or $outgoing_min_mota<0 or $outgoing_min_patla<0 or $outgoing_min_saran<0 or $milling_capacity<0 or $milling_capacity1<0 or $milling_capacity2<0 or $active<0){
+					if($district<0 or $to_district<0 or $name<0 or $id<0 or $type<0 or $latitude<0 or $longitude<0 or $incoming_min_paddy<0 or $total_rice_inventory<0 or $milling_capacity<0 or $minimum_outgoing_rice<0 or $active<0){
 						echo "Error : You have modified Template Header, please check";
 						exit();
 					}
@@ -338,15 +271,10 @@ try{
 					$MillReplica->setId($column[$id]);
 					$MillReplica->setType($column[$type]);
                     
-                    $MillReplica->setIncomingMinMota($column[$incoming_min_mota]);
-                    $MillReplica->setIncomingMinPatla($column[$incoming_min_patla]);
-                    $MillReplica->setIncomingMinSaran($column[$incoming_min_saran]);
-                    $MillReplica->setOutgoingMinMota($column[$outgoing_min_mota]);
-                    $MillReplica->setOutgoingMinPatla($column[$outgoing_min_patla]);
-                    $MillReplica->setOutgoingMinSaran($column[$outgoing_min_saran]);
+                    $MillReplica->setIncomingMinPaddy($column[$incoming_min_paddy]);
+                    $MillReplica->setTotalRiceInventory($column[$total_rice_inventory]);
                     $MillReplica->setMillingCapacity($column[$milling_capacity]);
-                    $MillReplica->setMillingCapacity1($column[$milling_capacity1]);
-                    $MillReplica->setMillingCapacity2($column[$milling_capacity2]);
+                    $MillReplica->setMinimumOutgoingRice($column[$minimum_outgoing_rice]);
                     
 					$MillReplica->setActive($column[$active]);
 					
@@ -388,32 +316,17 @@ try{
 							case $reverseMapData["type"]:
 								$type = $j;
 								break;
-                            case $reverseMapData["incoming_min_mota"]:
-                                $incoming_min_mota = $j;
+                            case $reverseMapData["incoming_min_paddy"]:
+                                $incoming_min_paddy = $j;
                                 break;
-                            case $reverseMapData["incoming_min_patla"]:
-                                $incoming_min_patla = $j;
-                                break;
-                            case $reverseMapData["incoming_min_saran"]:
-                                $incoming_min_saran = $j;
-                                break;
-                            case $reverseMapData["outgoing_min_mota"]:
-                                $outgoing_min_mota = $j;
-                                break;
-                            case $reverseMapData["outgoing_min_patla"]:
-                                $outgoing_min_patla = $j;
-                                break;
-                            case $reverseMapData["outgoing_min_saran"]:
-                                $outgoing_min_saran = $j;
+                            case $reverseMapData["total_rice_inventory"]:
+                                $total_rice_inventory = $j;
                                 break;
                             case $reverseMapData["milling_capacity"]:
                                 $milling_capacity = $j;
                                 break;
-                            case $reverseMapData["milling_capacity1"]:
-                                $milling_capacity1 = $j;
-                                break;
-                            case $reverseMapData["milling_capacity2"]:
-                                $milling_capacity2 = $j;
+                            case $reverseMapData["minimum_outgoing_rice"]:
+                                $minimum_outgoing_rice = $j;
                                 break;
 							case $reverseMapData["active"]:
 								$active = $j;

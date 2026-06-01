@@ -53,9 +53,7 @@ $tablename = "pc_".$id;
 												<th style="font-size:15px">PC ID</th> 
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Mota</th>
-												<th style="font-size:15px">Patla</th>
-												<th style="font-size:15px">Saran</th>
+												<th style="font-size:15px">Quantity Arrival</th>
 												<th style="font-size:15px">Active</th>
                                             </tr>
                                         </thead>
@@ -74,9 +72,7 @@ $tablename = "pc_".$id;
 											"<td>{$row['id']}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$row['mota']}</td>".
-											"<td>{$row['patla']}</td>".
-											"<td>{$row['saran']}</td>".
+											"<td>{$row['quantity_arrival']}</td>".
 											"<td>{$row['active']}</td></tr>";
 										}
 										
@@ -142,7 +138,7 @@ $tablename = "pc_".$id;
 				var tableName = '<?php echo $tablename ?>';
 				const csvResponse = await fetch('api/DownloadOptimalDataPC.php?format=csv&tableName='+tableName);
 				const csvBlob = await csvResponse.blob();
-				downloadFile(csvBlob, 'Chhattisgarh_PC_' + getDateString() + '.csv');
+				downloadFile(csvBlob, 'Telangana_PC_' + getDateString() + '.csv');
 			} catch (error) {
 				console.error('Error downloading CSV file:', error);
 			}
@@ -154,7 +150,7 @@ $tablename = "pc_".$id;
 				var tableName = '<?php echo $tablename ?>';
 				const excelResponse = await fetch('api/DownloadOptimalDataPC.php?format=xlsx&tableName='+tableName);
 				const excelBlob = await excelResponse.blob();
-				downloadFile(excelBlob, 'Chhattisgarh_PC_' + getDateString() + '.xlsx');
+				downloadFile(excelBlob, 'Telangana_PC_' + getDateString() + '.xlsx');
 			} catch (error) {
 				console.error('Error downloading XLSX file:', error);
 			}
@@ -170,7 +166,7 @@ $tablename = "pc_".$id;
 				const url = window.URL.createObjectURL(pdfBlob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'Chhattisgarh_PC_' + getDateString() + '.pdf';
+				link.download = 'Telangana_PC_' + getDateString() + '.pdf';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			} catch (error) {

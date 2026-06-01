@@ -21,12 +21,8 @@ $mapData = [
     "Warehouse Type" => "warehousetype",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Normal Rice" => "normal_rice",
-    "State FRK Rice" => "state_frk_rice",
-    "Central FRK Rice" => "central_frk_rice",
-    "Storage Rice" => "storage_rice",
-    "Storage State FRK Rice" => "storage_state_frk_rice",
-    "Storage Central FRK Rice" => "storage_central_frk_rice",
+    "Requirement" => "requirement",
+    "Storage Capacity" => "storage_capacity",
 	"Active/Not-Active" => "active"
 ];
 
@@ -103,16 +99,12 @@ try{
 		$type = -4;
 		$latitude = -5;
 		$longitude = -6;
-		$normal_rice = -7;
-        $state_frk_rice = -8;
-        $central_frk_rice = -9;
-        $storage_rice = -10;
-        $storage_state_frk_rice = -11;
-        $storage_central_frk_rice = -12;
+		$requirement = -7;
+        $storage_capacity = -8;
 		$active = -1;
 		while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 			if($i>0){
-				if($district<0 or $name<0 or $id<0 or $type<0 or $normal_rice<0 or $state_frk_rice<0 or $central_frk_rice<0 or $latitude<0 or $longitude<0 or $warehousetype<0 or $active<0){
+				if($district<0 or $name<0 or $id<0 or $type<0 or $requirement<0 or $storage_capacity<0 or $latitude<0 or $longitude<0 or $warehousetype<0 or $active<0){
 					echo "Error : You have modified Template Header, please check";
 					exit();
 				}
@@ -122,36 +114,13 @@ try{
 					$redirect = 0;
 				}
 
-				if(!isStringNumber($column[$normal_rice])){
-					echo "Error : Check Normal Rice Value: ".$column[$normal_rice];
+				if(!isStringNumber($column[$requirement])){
+					echo "Error : Check Requirement Value: ".$column[$requirement];
 					echo "</br>";
 					$redirect = 0;
 				}
-                if(!isStringNumber($column[$state_frk_rice])){
-					echo "Error : Check State FRK Rice Value: ".$column[$state_frk_rice];
-					echo "</br>";
-					$redirect = 0;
-				}
-                if(!isStringNumber($column[$central_frk_rice])){
-					echo "Error : Check Central FRK Rice Value: ".$column[$central_frk_rice];
-					echo "</br>";
-					$redirect = 0;
-				}
-                
-                if($storage_rice >= 0 && isset($column[$storage_rice]) && $column[$storage_rice] != "" && !isStringNumber($column[$storage_rice])){
-					echo "Error : Check Storage Rice Value: ".$column[$storage_rice];
-					echo "</br>";
-					$redirect = 0;
-				}
-                
-                if($storage_state_frk_rice >= 0 && isset($column[$storage_state_frk_rice]) && $column[$storage_state_frk_rice] != "" && !isStringNumber($column[$storage_state_frk_rice])){
-					echo "Error : Check Storage State FRK Rice Value: ".$column[$storage_state_frk_rice];
-					echo "</br>";
-					$redirect = 0;
-				}
-                
-                if($storage_central_frk_rice >= 0 && isset($column[$storage_central_frk_rice]) && $column[$storage_central_frk_rice] != "" && !isStringNumber($column[$storage_central_frk_rice])){
-					echo "Error : Check Storage Central FRK Rice Value: ".$column[$storage_central_frk_rice];
+                if(!isStringNumber($column[$storage_capacity])){
+					echo "Error : Check Storage Capacity Value: ".$column[$storage_capacity];
 					echo "</br>";
 					$redirect = 0;
 				}
@@ -173,49 +142,31 @@ try{
 					echo "</br>";
 					$redirect = 0;
 				}
+                $allowed_motorable = ['motorable', 'non motorable', 'nonmotorable', 'non-motorable'];
+                if (!in_array(strtolower(trim($column[$type])), $allowed_motorable)) {
+                    echo "Error : Motorable/Non-Motorable should be either Motorable or Non Motorable. Given: " . $column[$type];
+                    echo "</br>";
+                    $redirect = 0;
+                }
+
+                if (
+					!isset($column[$name]) ||
+					!preg_match('/^[a-zA-Z0-9_\- ]+$/', $column[$name])
+				) {
+					echo "Error: Name should only contain characters, numbers, underscores, hyphens, and spaces: " . ($column[$name] ?? 'Missing');
+					echo "<br>";
+					$redirect = 0;
+				}
+
                 if (
 					!isset($column[$id]) ||
-					!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
+					!preg_match('/^[a-zA-Z0-9_\-]+$/', $column[$id])
 				) {
-					echo "Error: Warehouse ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
+					echo "Error: ID should only contain characters, numbers, underscores, and hyphens (no spaces): " . ($column[$id] ?? 'Missing');
 					echo "<br>";
 					$redirect = 0;
 				}	
-				// Normal Rice should not exceed Storage Rice
-				if($storage_rice >= 0 && isset($column[$storage_rice]) && $column[$storage_rice] != ""){
-					$normal = floatval($column[$normal_rice]);
-					$storage = floatval($column[$storage_rice]);
 
-					if($normal > $storage){
-						echo "Error : Normal Rice cannot be greater than Storage Rice. Normal Rice: ".$normal." Storage Rice: ".$storage;
-						echo "</br>";
-						$redirect = 0;
-					}
-				}
-
-				// State FRK Rice should not exceed Storage State FRK Rice
-				if($storage_state_frk_rice >= 0 && isset($column[$storage_state_frk_rice]) && $column[$storage_state_frk_rice] != ""){
-					$state_frk = floatval($column[$state_frk_rice]);
-					$storage_state = floatval($column[$storage_state_frk_rice]);
-
-					if($state_frk > $storage_state){
-						echo "Error : State FRK Rice cannot be greater than Storage State FRK Rice. State FRK Rice: ".$state_frk." Storage State FRK Rice: ".$storage_state;
-						echo "</br>";
-						$redirect = 0;
-					}
-				}
-
-				// Central FRK Rice should not exceed Storage Central FRK Rice
-				if($storage_central_frk_rice >= 0 && isset($column[$storage_central_frk_rice]) && $column[$storage_central_frk_rice] != ""){
-					$central_frk = floatval($column[$central_frk_rice]);
-					$storage_central = floatval($column[$storage_central_frk_rice]);
-
-					if($central_frk > $storage_central){
-						echo "Error : Central FRK Rice cannot be greater than Storage Central FRK Rice. Central FRK Rice: ".$central_frk." Storage Central FRK Rice: ".$storage_central;
-						echo "</br>";
-						$redirect = 0;
-					}
-				}
 				
 				if(!($column[$active]==0 || $column[$active]==1)){
 					echo "Error : Check value of active/inactive column: ".$column[$active];
@@ -244,23 +195,11 @@ try{
 						case $reverseMapData["type"]:
 							$type = $j;
 							break;
-						case $reverseMapData["normal_rice"]:
-							$normal_rice = $j;
+						case $reverseMapData["requirement"]:
+							$requirement = $j;
 							break;
-                        case $reverseMapData["state_frk_rice"]:
-							$state_frk_rice = $j;
-							break;
-                        case $reverseMapData["central_frk_rice"]:
-							$central_frk_rice = $j;
-							break;
-                        case $reverseMapData["storage_rice"]:
-							$storage_rice = $j;
-							break;
-                        case $reverseMapData["storage_state_frk_rice"]:
-							$storage_state_frk_rice = $j;
-							break;
-                        case $reverseMapData["storage_central_frk_rice"]:
-							$storage_central_frk_rice = $j;
+                        case $reverseMapData["storage_capacity"]:
+							$storage_capacity = $j;
 							break;
 						case $reverseMapData["warehousetype"]:
 							$warehousetype = $j;
@@ -298,16 +237,12 @@ try{
 			$type = -4;
 			$latitude = -5;
 			$longitude = -6;
-			$normal_rice = -7;
-            $state_frk_rice = -8;
-            $central_frk_rice = -9;
-            $storage_rice = -11;
-            $storage_state_frk_rice = -12;
-            $storage_central_frk_rice = -13;
+			$requirement = -7;
+            $storage_capacity = -8;
 			$active = -10;
 			while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
 				if($i>0){
-					if($district<0 or $name<0 or $id<0 or $type<0 or $normal_rice<0 or $state_frk_rice<0 or $central_frk_rice<0 or $latitude<0 or $longitude<0 or $warehousetype<0 or $active<0){
+					if($district<0 or $name<0 or $id<0 or $type<0 or $requirement<0 or $storage_capacity<0 or $latitude<0 or $longitude<0 or $warehousetype<0 or $active<0){
 						echo "Error : You have modified Template Header, please check";
 						exit();
 					}
@@ -320,12 +255,8 @@ try{
 					$Warehouse->setName($column[$name]);
 					$Warehouse->setId($column[$id]);
 					$Warehouse->setType($column[$type]);
-					$Warehouse->setNormalRice($column[$normal_rice]);
-                    $Warehouse->setStateFrkRice($column[$state_frk_rice]);
-                    $Warehouse->setCentralFrkRice($column[$central_frk_rice]);
-                    $Warehouse->setStorageRice(isset($column[$storage_rice]) ? $column[$storage_rice] : "0");
-                    $Warehouse->setStorageStateFrkRice(isset($column[$storage_state_frk_rice]) ? $column[$storage_state_frk_rice] : "0");
-                    $Warehouse->setStorageCentralFrkRice(isset($column[$storage_central_frk_rice]) ? $column[$storage_central_frk_rice] : "0");
+					$Warehouse->setRequirement($column[$requirement]);
+                    $Warehouse->setStorageCapacity($column[$storage_capacity]);
 					$Warehouse->setWarehousetype($column[$warehousetype]);
 					$Warehouse->setActive($column[$active]);
 					while(true){
@@ -374,23 +305,11 @@ try{
 							case $reverseMapData["type"]:
 								$type = $j;
 								break;
-							case $reverseMapData["normal_rice"]:
-								$normal_rice = $j;
+							case $reverseMapData["requirement"]:
+								$requirement = $j;
 								break;
-                            case $reverseMapData["state_frk_rice"]:
-								$state_frk_rice = $j;
-								break;
-                            case $reverseMapData["central_frk_rice"]:
-								$central_frk_rice = $j;
-								break;
-                            case $reverseMapData["storage_rice"]:
-								$storage_rice = $j;
-								break;
-                            case $reverseMapData["storage_state_frk_rice"]:
-								$storage_state_frk_rice = $j;
-								break;
-                            case $reverseMapData["storage_central_frk_rice"]:
-								$storage_central_frk_rice = $j;
+                            case $reverseMapData["storage_capacity"]:
+								$storage_capacity = $j;
 								break;
 							case $reverseMapData["warehousetype"]:
 								$warehousetype = $j;

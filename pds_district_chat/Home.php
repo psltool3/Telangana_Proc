@@ -142,7 +142,7 @@ if($currentTimestamp >= $targetTimestamp) {
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li class="active">Chhattisgarh Procurement Route Optimisation</li>
+                    <li class="active">Telangana Procurement Movement Optimisation</li>
                 </ul>
                 <!-- END BREADCRUMB -->
 
@@ -156,7 +156,7 @@ if($currentTimestamp >= $targetTimestamp) {
                             <!-- START SIMPLE DATATABLE -->
                             <div class="panel panel-default">
 								<div class="panel-heading">
-                                    <h3 class="panel-title">Chhattisgarh Procurement Route Optimisation - <b><?php echo $district; ?></b> <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
+                                    <h3 class="panel-title">Telangana Procurement Movement Optimisation - <b><?php echo $district; ?></b> <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
                                 </div>
                             </div>
 							<div class="row">
@@ -738,7 +738,7 @@ if($currentTimestamp >= $targetTimestamp) {
 										var district_reason = "<td>" + reason_district + "</td>";
 									}
 									else{
-										var district_reason = "<td><input type='text' class='form-control' maxlength='50' onchange='handleReasonChange(\"" + uniqueid_idreason + "\")' id='" + uniqueid_idreason + "' name='" + uniqueid_idreason + "' disabled /></td>";
+										var district_reason = "<td><select class='form-control' onchange='handleReasonChange(\"" + uniqueid_idreason + "\")' id='" + uniqueid_idreason + "' name='" + uniqueid_idreason + "' disabled><option value=''>Select Reason</option><option value='Road not accessible'>Road not accessible</option><option value='Road repair going on'>Road repair going on</option><option value='Pertaining to Distance'>Pertaining to Distance</option></select></td>";
 									}
 									
 									var reset_button = "";

@@ -63,7 +63,7 @@ if($numrows>0){
 }
 
 function formatName($name) {
-	$name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -149,14 +149,25 @@ try{
 					echo "</br>";
 					$redirect = 0;
 				}
+
+                if (
+					!isset($column[$name]) ||
+					!preg_match('/^[a-zA-Z0-9_\- ]+$/', $column[$name])
+				) {
+					echo "Error: Name should only contain characters, numbers, underscores, hyphens, and spaces: " . ($column[$name] ?? 'Missing');
+					echo "<br>";
+					$redirect = 0;
+				}
+
                 if (
 					!isset($column[$id]) ||
-					!preg_match('/^[A-Za-z0-9]+$/', $column[$id])
+					!preg_match('/^[a-zA-Z0-9_\-]+$/', $column[$id])
 				) {
-					echo "Error: Mill Inter ID should not contain spaces or any special characters: " . ($column[$id] ?? 'Missing');
+					echo "Error: Mill Inter ID should only contain characters, numbers, underscores, and hyphens (no spaces): " . ($column[$id] ?? 'Missing');
 					echo "<br>";
 					$redirect = 0;
 				}	
+				
 				if(!($column[$active]==0 || $column[$active]==1)){
 					echo "Error : Check value of active/inactive column: ".$column[$active];
 					echo "</br>";

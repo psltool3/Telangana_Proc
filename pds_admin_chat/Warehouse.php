@@ -85,12 +85,8 @@ require('Header.php');
 												<th style="font-size:15px">Warehouse Type</th>
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Normal Rice (Qtl)</th>
-												<th style="font-size:15px">State FRK Rice (Qtl)</th>
-												<th style="font-size:15px">Central FRK Rice (Qtl)</th>
-												<th style="font-size:15px">Storage Rice (Qtl)</th>
-												<th style="font-size:15px">Storage State FRK Rice (Qtl)</th>
-												<th style="font-size:15px">Storage Central FRK Rice (Qtl)</th>
+												<th style="font-size:15px">Requirement (Qtl)</th>
+												<th style="font-size:15px">Storage Capacity (Qtl)</th>
 												<th style="font-size:16px">Status</th>
 												<th style="font-size:16px">Change Status</th>
                                                 <th style="font-size:15px">Edit</th>
@@ -120,12 +116,8 @@ require('Header.php');
 											"<td>{$row['warehousetype']}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$row['normal_rice']}</td>".
-											"<td>{$row['state_frk_rice']}</td>".
-											"<td>{$row['central_frk_rice']}</td>".
-											"<td>{$row['storage_rice']}</td>".
-											"<td>{$row['storage_state_frk_rice']}</td>".
-											"<td>{$row['storage_central_frk_rice']}</td>".
+											"<td>{$row['requirement']}</td>".
+											"<td>{$row['storage_capacity']}</td>".
 											"<td>$status</td>".
 											 "<td> <button class='btn btn-info btn-rounded' onclick=\"change_status('{$temp_id}')\">Change Status</button></td>".
 											 "<td> <button class='btn btn-warning btn-rounded' onclick=\"edit_entry('{$temp_id}')\">Edit</button></td>".

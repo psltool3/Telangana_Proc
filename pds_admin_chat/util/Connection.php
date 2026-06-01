@@ -3,7 +3,7 @@
 date_default_timezone_set("Asia/Kolkata");
 
 //connection host,username, password, database name
-$con = mysqli_connect('localhost','root','','chhattisgarh2');
+$con = mysqli_connect('localhost','root','','telangana_procurement');
 //$con = mysqli_connect('localhost','intrauser','Intrauser@123','pds');
 
 

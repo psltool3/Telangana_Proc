@@ -17,7 +17,7 @@ if(!SessionCheck()){
 require('Header.php');
 
 function formatName($name) {
-    $name = preg_replace('/[^a-zA-Z ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -61,6 +61,15 @@ $result = mysqli_query($con,$query);
 $row = mysqli_fetch_assoc($result);
 $numrows = mysqli_num_rows($result);
 
+if (!preg_match('/^[a-zA-Z0-9_\-\s]+$/', $_POST["name"])) {
+    echo "Error : Name should only contain characters, numbers, underscores, hyphens, and spaces";
+    exit();
+}
+if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $_POST["id"])) {
+    echo "Error : ID should only contain characters, numbers, underscores, and hyphens (no spaces)";
+    exit();
+}
+
 if($numrows == 0){
 	echo "Error : Password or Username is incorrect";
 	return;
@@ -71,33 +80,13 @@ if(!isValidCoordinate($_POST["latitude"],'latitude') or !isValidCoordinate($_POS
 	exit();
 }
 
-if(!isStringNumber($_POST["normal_rice"])){
-	echo "Error : Check Normal Rice Value";
+if(!isStringNumber($_POST["requirement"])){
+	echo "Error : Check Requirement Value";
 	exit();
 }
 
-if(!isStringNumber($_POST["state_frk_rice"])){
-	echo "Error : Check State FRK Rice Value";
-	exit();
-}
-
-if(!isStringNumber($_POST["central_frk_rice"])){
-	echo "Error : Check Central FRK Rice Value";
-	exit();
-}
-
-if(isset($_POST["storage_rice"]) && $_POST["storage_rice"] != "" && !isStringNumber($_POST["storage_rice"])){
-	echo "Error : Check Storage Rice Value";
-	exit();
-}
-
-if(isset($_POST["storage_state_frk_rice"]) && $_POST["storage_state_frk_rice"] != "" && !isStringNumber($_POST["storage_state_frk_rice"])){
-	echo "Error : Check Storage State FRK Rice Value";
-	exit();
-}
-
-if(isset($_POST["storage_central_frk_rice"]) && $_POST["storage_central_frk_rice"] != "" && !isStringNumber($_POST["storage_central_frk_rice"])){
-	echo "Error : Check Storage Central FRK Rice Value";
+if(isset($_POST["storage_capacity"]) && $_POST["storage_capacity"] != "" && !isStringNumber($_POST["storage_capacity"])){
+	echo "Error : Check Storage Capacity Value";
 	exit();
 }
 if(!isValidCoordinate($_POST["latitude"],'latitude') or !isValidCoordinate($_POST["longitude"],'longitude')){
@@ -117,22 +106,10 @@ if (
 }
 $errors = [];
 
-$val_storage_rice = (isset($_POST["storage_rice"]) && $_POST["storage_rice"] != "") ? (float)$_POST["storage_rice"] : 0;
-$val_normal_rice = (isset($_POST["normal_rice"]) && $_POST["normal_rice"] != "") ? (float)$_POST["normal_rice"] : 0;
-if($val_normal_rice > $val_storage_rice){
-	$errors[] = "Error : normal rice (Qtl) should not be greater than storage rice(Qtl)";
-}
-
-$val_storage_state = (isset($_POST["storage_state_frk_rice"]) && $_POST["storage_state_frk_rice"] != "") ? (float)$_POST["storage_state_frk_rice"] : 0;
-$val_state_rice = (isset($_POST["state_frk_rice"]) && $_POST["state_frk_rice"] != "") ? (float)$_POST["state_frk_rice"] : 0;
-if($val_state_rice > $val_storage_state){
-	$errors[] = "Error : state frk rice (Qtl) should not be greater than storage state frk rice(Qtl)";
-}
-
-$val_storage_central = (isset($_POST["storage_central_frk_rice"]) && $_POST["storage_central_frk_rice"] != "") ? (float)$_POST["storage_central_frk_rice"] : 0;
-$val_central_rice = (isset($_POST["central_frk_rice"]) && $_POST["central_frk_rice"] != "") ? (float)$_POST["central_frk_rice"] : 0;
-if($val_central_rice > $val_storage_central){
-	$errors[] = "Error : central frk rice (Qtl) should not be greater than storage central frk rice(Qtl)";
+$val_storage_capacity = (isset($_POST["storage_capacity"]) && $_POST["storage_capacity"] != "") ? (float)$_POST["storage_capacity"] : 0;
+$val_requirement = (isset($_POST["requirement"]) && $_POST["requirement"] != "") ? (float)$_POST["requirement"] : 0;
+if($val_requirement > $val_storage_capacity){
+	$errors[] = "Error : requirement (Qtl) should not be greater than storage capacity(Qtl)";
 }
 
 if (!empty($errors)) {
@@ -143,6 +120,12 @@ if (!empty($errors)) {
 $errors = [];
 
 
+
+$allowed_motorable = ['motorable', 'non motorable', 'nonmotorable', 'non-motorable'];
+if (!in_array(strtolower(trim($_POST["type"])), $allowed_motorable)) {
+    echo "Error : Motorable/Non-Motorable should be either Motorable or Non Motorable.";
+    exit();
+}
 $dbHashedPassword = $row['password'];
 if(password_verify($person->getPassword(), $dbHashedPassword)){
     
@@ -152,12 +135,8 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $name = formatName($_POST["name"]);
     $id = $_POST["id"];
     $type = $_POST["type"];
-    $normal_rice = $_POST["normal_rice"];
-    $state_frk_rice = $_POST["state_frk_rice"];
-    $central_frk_rice = $_POST["central_frk_rice"];
-    $storage_rice = isset($_POST["storage_rice"]) ? $_POST["storage_rice"] : "0";
-    $storage_state_frk_rice = isset($_POST["storage_state_frk_rice"]) ? $_POST["storage_state_frk_rice"] : "0";
-    $storage_central_frk_rice = isset($_POST["storage_central_frk_rice"]) ? $_POST["storage_central_frk_rice"] : "0";
+    $requirement = $_POST["requirement"];
+    $storage_capacity = isset($_POST["storage_capacity"]) ? $_POST["storage_capacity"] : "0";
     $warehousetype = $_POST["warehousetype"];
     $uniqueid = uniqid("WH_",);
 
@@ -169,12 +148,8 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $Warehouse->setName($name);
     $Warehouse->setId($id);
     $Warehouse->setType($type);
-    $Warehouse->setNormalRice($normal_rice);
-    $Warehouse->setStateFrkRice($state_frk_rice);
-    $Warehouse->setCentralFrkRice($central_frk_rice);
-    $Warehouse->setStorageRice($storage_rice);
-    $Warehouse->setStorageStateFrkRice($storage_state_frk_rice);
-    $Warehouse->setStorageCentralFrkRice($storage_central_frk_rice);
+    $Warehouse->setRequirement($requirement);
+    $Warehouse->setStorageCapacity($storage_capacity);
     $Warehouse->setWarehousetype($warehousetype);
     $Warehouse->setActive("1");
 

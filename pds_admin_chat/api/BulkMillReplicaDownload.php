@@ -20,15 +20,10 @@ $mapData = [
     "Mill Inter Type" => "type",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Incoming Minimum of Mota" => "incoming_min_mota",
-    "Incoming Minimum of Patla" => "incoming_min_patla",
-    "Incoming Minimum of Saran" => "incoming_min_saran",
-    "Total Normal Rice (Qtl) Inventory" => "outgoing_min_mota",
-    "Total State FRK Rice (Qtl) Inventory" => "outgoing_min_patla",
-    "Total Central FRK Rice(Qtl) Inventory" => "outgoing_min_saran",
-    "Milling Capacity Mota" => "milling_capacity",
-    "Milling Capacity Patla" => "milling_capacity1",
-    "Milling Capacity Saran" => "milling_capacity2",
+    "Incoming Min Paddy" => "incoming_min_paddy",
+    "Total Rice Inventory" => "total_rice_inventory",
+    "Milling Capacity" => "milling_capacity",
+    "Minimum Outgoing Rice" => "minimum_outgoing_rice",
 	"Active/Not-Active" => "active"
 ];
 

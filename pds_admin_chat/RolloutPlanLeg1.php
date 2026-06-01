@@ -140,7 +140,7 @@ require('Header.php');
 									<button id="downloadPDF" class="btn btn-danger" style="margin-bottom: 10px;" type="button">Download PDF</button>
 									<a href="OptimisedDataAllLeg1.php"><button class="btn btn-info" style="margin-bottom: 10px;" type="button">Previous Data</button></a>
 									</br>
-									<button class='btn btn-info pull-right' onClick='acceptAll()' type='button' style='margin-left:10px;'>Accept All</button><button class='btn btn-primary pull-right' onClick='sendData()' type='button'>Save</button>
+									<!-- <button class='btn btn-info pull-right' onClick='acceptAll()' type='button' style='margin-left:10px;'>Accept All</button><button class='btn btn-primary pull-right' onClick='sendData()' type='button'>Save</button> -->
 									</br>
 								</div>
                             <!-- END SIMPLE DATATABLE -->
@@ -470,7 +470,7 @@ require('Header.php');
 								status_part = "<button class='btn btn-info' id=\"" + uniqueid + "\" onClick='markReview(\"" + uniqueid + "\")'>Mark as Implemented</button>"; 
 								uniqueid_bool_array.push(uniqueid);
 							}
-							else if(status=="implemented"){
+							else if(status.toLowerCase()=="implemented"){
 								status_part = "Already Implemented";
 							}
 							

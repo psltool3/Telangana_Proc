@@ -69,9 +69,9 @@ require('Header.php');
                                                 <th style="font-size:16px">Month</th>
 												<th style="font-size:16px">Year</th>
                                                 <th style="font-size:16px">Mill</th>
-                                                <th style="font-size:16px">Mill Replica</th>
                                                 <th style="font-size:16px">Warehouse</th>
                                                 <th style="font-size:16px">Optimised Data</th>
+                                                <th style="font-size:16px">Generate Data</th>
                                             </tr>
                                         </thead>
                                         <tbody id="table_body">
@@ -87,9 +87,9 @@ require('Header.php');
 											 "<td>{$row['month']}</td>".
 											 "<td>{$row['year']}</td>".
 											 "<td> <button class='btn btn-info btn-rounded' onclick=\"mill_open('{$temp_id}')\">View Mills</button></td>".
-											 "<td> <button class='btn btn-info btn-rounded' style='background-color: #8e44ad; border-color: #8e44ad;' onclick=\"mill_replica_open('{$temp_id}')\">View Mill Replicas</button></td>".
              								 "<td> <button class='btn btn-warning btn-rounded' onclick=\"warehouse_open('{$temp_id}')\">View Warehouses</button></td>".
-             								 "<td> <button class='btn btn-danger btn-rounded' onclick=\"optimised_open('{$temp_id}')\">View Data</button></td></tr>";
+             								 "<td> <button class='btn btn-danger btn-rounded' onclick=\"optimised_open('{$temp_id}')\">View Data</button></td>".
+                                              "<td> <button class='btn btn-danger btn-rounded' onclick=\"generate_report('{$temp_id}')\">View Report</button></td></tr>";
              							}
 
 										?>
@@ -217,6 +217,10 @@ require('Header.php');
 		function send_email(temp_id){	
 			document.getElementById('popup').style.display = 'block';
 			uidCalled = temp_id;
+		}
+
+        function generate_report(temp_id, leg_id){
+			post({id:temp_id,step:"all",legid:leg_id} ,"GenerateDataView1.php");
 		}
 		
 		function send_all(temp_id){	

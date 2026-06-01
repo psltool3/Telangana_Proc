@@ -21,12 +21,8 @@ $mapData = [
     "Warehouse Type" => "warehousetype",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Normal Rice" => "normal_rice",
-    "State FRK Rice" => "state_frk_rice",
-    "Central FRK Rice" => "central_frk_rice",
-    "Storage Rice" => "storage_rice",
-    "Storage State FRK Rice" => "storage_state_frk_rice",
-    "Storage Central FRK Rice" => "storage_central_frk_rice",
+    "Requirement" => "requirement",
+    "Storage Capacity" => "storage_capacity",
 	"Active/Not-Active" => "active"
 ];
 

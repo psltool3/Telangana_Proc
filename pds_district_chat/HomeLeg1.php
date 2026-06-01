@@ -738,7 +738,7 @@ if($currentTimestamp >= $targetTimestamp) {
 										var district_reason = "<td>" + reason_district + "</td>";
 									}
 									else{
-										var district_reason = "<td><input type='text' class='form-control' maxlength='50' onchange='handleReasonChange(\"" + uniqueid_idreason + "\")' id='" + uniqueid_idreason + "' name='" + uniqueid_idreason + "' disabled /></td>";
+										var district_reason = "<td><select class='form-control' onchange='handleReasonChange(\"" + uniqueid_idreason + "\")' id='" + uniqueid_idreason + "' name='" + uniqueid_idreason + "' disabled><option value=''>Select Reason</option><option value='Road not accessible'>Road not accessible</option><option value='Road repair going on'>Road repair going on</option><option value='Pertaining to Distance'>Pertaining to Distance</option></select></td>";
 									}
 									
 									var reset_button = "";

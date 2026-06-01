@@ -159,7 +159,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const csvResponse = await fetch('api/DownloadOptimalDataMill.php?format=csv&tableName='+tableName);
 				const csvBlob = await csvResponse.blob();
-				downloadFile(csvBlob, 'Chhattisgarh_Mill_Replica_' + getDateString() + '.csv');
+				downloadFile(csvBlob, 'Telangana_Mill_Replica_' + getDateString() + '.csv');
 			} catch (error) {
 				console.error('Error downloading CSV file:', error);
 			}
@@ -171,7 +171,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var tableName = '<?php echo $tablename ?>';
 				const excelResponse = await fetch('api/DownloadOptimalDataMill.php?format=xlsx&tableName='+tableName);
 				const excelBlob = await excelResponse.blob();
-				downloadFile(excelBlob, 'Chhattisgarh_Mill_Replica_' + getDateString() + '.xlsx');
+				downloadFile(excelBlob, 'Telangana_Mill_Replica_' + getDateString() + '.xlsx');
 			} catch (error) {
 				console.error('Error downloading XLSX file:', error);
 			}

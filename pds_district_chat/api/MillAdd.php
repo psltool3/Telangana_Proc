@@ -19,7 +19,7 @@ require('Header.php');
 
 
 function formatName($name) {
-	$name = preg_replace('/[^a-zA-Z0-9_ ]/', '', $name);
+	$name = preg_replace('/[^a-zA-Z0-9_\- ]/', '', $name);
     $name = ucwords(strtolower($name));
     return trim($name);
 }
@@ -62,6 +62,15 @@ $query = "SELECT * FROM login WHERE username='".$person->getUsername()."'";
 $result = mysqli_query($con,$query);
 $row = mysqli_fetch_assoc($result);
 
+if (!preg_match('/^[a-zA-Z0-9_\-\s]+$/', $_POST["name"])) {
+    echo "Error : Name should only contain characters, numbers, underscores, hyphens, and spaces";
+    exit();
+}
+if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $_POST["id"])) {
+    echo "Error : ID should only contain characters, numbers, underscores, and hyphens (no spaces)";
+    exit();
+}
+
 if(!isValidCoordinate($_POST["latitude"],'latitude') or !isValidCoordinate($_POST["longitude"],'longitude')){
 	echo "Error : Check Latitude and Longitude Value";
 	exit();
@@ -79,31 +88,21 @@ if (
 
 $errors = [];
 
-// Incoming Min Mota
+// Incoming Min Paddy
 if (
-    !is_numeric($_POST["incoming_min_mota"]) ||
+    !is_numeric($_POST["incoming_min_paddy"]) ||
     !is_numeric($_POST["milling_capacity"]) ||
-    $_POST["incoming_min_mota"] > $_POST["milling_capacity"]
+    $_POST["incoming_min_paddy"] >= $_POST["milling_capacity"]
 ) {
-    $errors[] = "Error : Incoming Min Mota must be less than or equal to Milling Capacity Mota";
+    $errors[] = "Error : Milling Capacity must be greater than Incoming Min Paddy";
 }
 
-// Incoming Min Patla
-if (
-    !is_numeric($_POST["incoming_min_patla"]) ||
-    !is_numeric($_POST["milling_capacity1"]) ||
-    $_POST["incoming_min_patla"] > $_POST["milling_capacity1"]
-) {
-    $errors[] = "Error : Incoming Min Patla must be less than or equal to Milling Capacity Patla";
+if (!is_numeric($_POST["total_rice_inventory"])) {
+    $errors[] = "Error : Total Rice Inventory must be a number";
 }
 
-// Incoming Min Saran
-if (
-    !is_numeric($_POST["incoming_min_saran"]) ||
-    !is_numeric($_POST["milling_capacity2"]) ||
-    $_POST["incoming_min_saran"] > $_POST["milling_capacity2"]
-) {
-    $errors[] = "Error : Incoming Min Saran must be less than or equal to Milling Capacity Saran";
+if (!is_numeric($_POST["minimum_outgoing_rice"])) {
+    $errors[] = "Error : Minimum Outgoing Rice must be a number";
 }
 
 // If any error exists, print all and stop
@@ -124,17 +123,10 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $name = formatName($_POST["name"]);
     $id = $_POST["id"];
     $type = $_POST["type"];
+    $incoming_min_paddy = $_POST["incoming_min_paddy"];
+    $total_rice_inventory = $_POST["total_rice_inventory"];
     $milling_capacity = $_POST["milling_capacity"];
-    $milling_capacity1 = $_POST["milling_capacity1"];
-    $milling_capacity2 = $_POST["milling_capacity2"];
-    
-    $incoming_min_mota = $_POST["incoming_min_mota"];
-    $incoming_min_patla = $_POST["incoming_min_patla"];
-    $incoming_min_saran = $_POST["incoming_min_saran"];
-    
-    $outgoing_min_mota = $_POST["outgoing_min_mota"];
-    $outgoing_min_patla = $_POST["outgoing_min_patla"];
-    $outgoing_min_saran = $_POST["outgoing_min_saran"];
+    $minimum_outgoing_rice = $_POST["minimum_outgoing_rice"];
     
     $uniqueid = uniqid("MILL_",);
 
@@ -147,15 +139,10 @@ if(password_verify($person->getPassword(), $dbHashedPassword)){
     $Mill->setId($id);
     $Mill->setType($type);
     
+    $Mill->setIncomingMinPaddy($incoming_min_paddy);
+    $Mill->setTotalRiceInventory($total_rice_inventory);
     $Mill->setMillingCapacity($milling_capacity);
-    $Mill->setMillingCapacity1($milling_capacity1);
-    $Mill->setMillingCapacity2($milling_capacity2);
-    $Mill->setIncomingMinMota($incoming_min_mota);
-    $Mill->setIncomingMinPatla($incoming_min_patla);
-    $Mill->setIncomingMinSaran($incoming_min_saran);
-    $Mill->setOutgoingMinMota($outgoing_min_mota);
-    $Mill->setOutgoingMinPatla($outgoing_min_patla);
-    $Mill->setOutgoingMinSaran($outgoing_min_saran);
+    $Mill->setMinimumOutgoingRice($minimum_outgoing_rice);
     
 	$Mill->setActive("1");
 

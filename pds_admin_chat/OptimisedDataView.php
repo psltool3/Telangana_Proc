@@ -202,7 +202,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var district = document.getElementById('district').value;
 				const csvResponse = await fetch('api/DownloadOptimalDataOptimised.php?format=csv&tableName='+tableName+'&district='+district);
 				const csvBlob = await csvResponse.blob();
-				downloadFile(csvBlob, 'Chhattisgarh_Optimised_Data_' + getDateString() + '.csv');
+				downloadFile(csvBlob, 'Telangana_Optimised_Data_' + getDateString() + '.csv');
 			} catch (error) {
 				console.error('Error downloading CSV file:', error);
 			}
@@ -215,7 +215,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				var district = document.getElementById('district').value;
 				const excelResponse = await fetch('api/DownloadOptimalDataOptimised.php?format=xlsx&tableName='+tableName+'&district='+district);
 				const excelBlob = await excelResponse.blob();
-				downloadFile(excelBlob, 'Chhattisgarh_Optimised_Data_' + getDateString() + '.xlsx');
+				downloadFile(excelBlob, 'Telangana_Optimised_Data_' + getDateString() + '.xlsx');
 			} catch (error) {
 				console.error('Error downloading XLSX file:', error);
 			}
@@ -231,7 +231,7 @@ if (isset($_POST['step']) && $_POST['step'] == 'leg1') {
 				const url = window.URL.createObjectURL(pdfBlob);
 				const link = document.createElement('a');
 				link.href = url;
-				link.download = 'Chhattisgarh_Optimised_Data_' + getDateString() + '.pdf';
+				link.download = 'Telangana_Optimised_Data_' + getDateString() + '.pdf';
 				link.click();
 				window.URL.revokeObjectURL(url);
 			} catch (error) {

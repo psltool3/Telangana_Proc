@@ -117,6 +117,12 @@ try{
 					echo "</br>";
 					$redirect = 0;
 				}
+                $allowed_motorable = ['motorable', 'non motorable', 'nonmotorable', 'non-motorable'];
+                if (!in_array(strtolower(trim($column[$type])), $allowed_motorable)) {
+                    echo "Error : Motorable/Non-Motorable should be either Motorable or Non Motorable. Given: " . $column[$type];
+                    echo "</br>";
+                    $redirect = 0;
+                }
 				if(!in_array($column[$district], $districts)){
 					echo "Error : Check District Name: ".$column[$district];
 					echo "</br>";

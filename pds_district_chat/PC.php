@@ -85,9 +85,7 @@ $district = $_SESSION['district_district'];
 												<th style="font-size:15px">PC ID</th>
 												<th style="font-size:15px">Latitude</th>
 												<th style="font-size:15px">Longitude</th>
-												<th style="font-size:15px">Mota</th>
-												<th style="font-size:15px">Patla</th>
-												<th style="font-size:15px">Saran</th>
+												<th style="font-size:15px">Quantity Arrival (Qtl)</th>
 												<th style="font-size:16px">Status</th>
 												<th style="font-size:16px">Change Status</th>
                                                 <th style="font-size:15px">Edit</th>
@@ -115,11 +113,7 @@ $district = $_SESSION['district_district'];
 											"<td>{$row['id']}</td>".
 											"<td>{$row['latitude']}</td>".
 											"<td>{$row['longitude']}</td>".
-											"<td>{$row['mota']}</td>".
-											"<td>{$row['patla']}</td>".
-											
-
-											"<td>{$row['saran']}</td>".
+											"<td>{$row['quantity_arrival']}</td>".
 											"<td>$status</td>".
 											 "<td> <button class='btn btn-info btn-rounded' onclick=\"change_status('{$temp_id}')\">Change Status</button></td>".
 											 "<td> <button class='btn btn-warning btn-rounded' onclick=\"edit_entry('{$temp_id}')\">Edit</button></td>".

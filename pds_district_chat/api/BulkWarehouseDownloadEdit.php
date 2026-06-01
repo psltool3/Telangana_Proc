@@ -1,15 +1,17 @@
 <?php
 require('../util/Connection.php');
+require('../util/Connection.php');
 require('../structures/Warehouse.php');
 require('../util/SessionFunction.php');
 require('../structures/Login.php');
-session_start();
-ini_set('max_execution_time', 3000);
-require('../util/Logger.php');
 require('../util/Security.php');
 require ('../util/Encryption.php');
+require('../util/Logger.php');
 $nonceValue = 'nonce_value';
 
+if(!SessionCheck()){
+	return;
+}
 
 $mapData = [
     "District" => "district",
@@ -19,19 +21,13 @@ $mapData = [
     "Warehouse Type" => "warehousetype",
     "Latitude" => "latitude",
     "Longitude" => "longitude",
-    "Normal Rice" => "normal_rice",
-    "State FRK Rice" => "state_frk_rice",
-    "Central FRK Rice" => "central_frk_rice",
-    "Storage Rice" => "storage_rice",
-    "Storage State FRK Rice" => "storage_state_frk_rice",
-    "Storage Central FRK Rice" => "storage_central_frk_rice",
+    "Requirement" => "requirement",
+    "Storage Capacity" => "storage_capacity",
 	"Active/Not-Active" => "active"
 ];
 
 // Reverse mapping
 $reverseMapData = array_flip($mapData);
-$district = $_SESSION['district_district'];
-
 
 // Filter the excel data 
 function filterData(&$str){ 
@@ -68,7 +64,7 @@ $excelDataColumns = implode(",", array_values($columns)) . "\n";
 // Render excel data 
 echo $excelDataColumns;
 
-$query = "SELECT * FROM warehouse WHERE district='$district'";
+$query = "SELECT * FROM warehouse WHERE 1";
 $result = mysqli_query($con,$query);
 $numrows = mysqli_num_rows($result);
 if($numrows>0){
@@ -82,8 +78,6 @@ if($numrows>0){
 		echo "\n";
 	}
 }
-
-
 
 exit();
 

@@ -33,15 +33,27 @@ foreach ($_POST as $key => $value) {
 		$commodity = str_replace('_', '.', $commodity);
 		$commodity = str_replace('.bool', '', $commodity);
 		if($value=="yes"){
-			$query = "UPDATE " . $tablename . " SET district_change_approve='yes' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-			writeLog("User ->" ." Save Data | approve district change yes ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+			$check_query = "SELECT approve_district FROM $tablename WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+			$check_result = mysqli_query($con,$check_query);
+			$check_row = mysqli_fetch_assoc($check_result);
+			if($check_row && ($check_row['approve_district'] == 'yes' || $check_row['approve_district'] == 'no')){
+				$query = "UPDATE " . $tablename . " SET district_change_approve='yes' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+				writeLog("User ->" ." Save Data | approve district change yes ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+				mysqli_query($con,$query);
+				echo $query;
+			}
 		}
 		else if($value=="no"){
-			$query = "UPDATE " . $tablename . " SET district_change_approve='no' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-			writeLog("User ->" ." Save Data | approve district change no ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+			$check_query = "SELECT approve_district FROM $tablename WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+			$check_result = mysqli_query($con,$check_query);
+			$check_row = mysqli_fetch_assoc($check_result);
+			if($check_row && ($check_row['approve_district'] == 'yes' || $check_row['approve_district'] == 'no')){
+				$query = "UPDATE " . $tablename . " SET district_change_approve='no' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+				writeLog("User ->" ." Save Data | approve district change no ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+				mysqli_query($con,$query);
+				echo $query;
+			}
 		}
-		mysqli_query($con,$query);
-		echo $query;
 	}	
 	if (substr($key, -11) === '_iddistance' or substr($key, -9) === '_idreason' or substr($key, -8) === '_approve' or $value===""){
 		continue;
@@ -53,33 +65,39 @@ foreach ($_POST as $key => $value) {
 	$toid = str_replace('_', '.', $toid);
 	$commodity = str_replace('_', '.', $commodity);
 	$commodity = str_replace('.bool', '', $commodity);
-	if($value=="yes"){
-		$query = "UPDATE " . $tablename . " SET approve_admin='yes' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-		writeLog("User ->" ." Save Data | approve admin change yes ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+
+	$check_query = "SELECT approve_district FROM $tablename WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+	$check_result = mysqli_query($con,$check_query);
+	$check_row = mysqli_fetch_assoc($check_result);
+	if($check_row && ($check_row['approve_district'] == 'yes' || $check_row['approve_district'] == 'no')){
+		if($value=="yes"){
+			$query = "UPDATE " . $tablename . " SET approve_admin='yes' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+			writeLog("User ->" ." Save Data | approve admin change yes ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+		}
+		else if($value=="same"){
+			$query = "UPDATE " . $tablename . " SET approve_admin='no' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+			writeLog("User ->" ." Save Data | approve admin change no ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
+		}
+		else if($value=="no"){
+			// this case will not fall as we have check for this in js
+			$query = "UPDATE " . $tablename . " SET approve_admin='', new_id_admin='' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+		}
+		else if($value==""){
+			$query = "";
+			//$query = "UPDATE " . $tablename . " SET approve_admin='', new_id_admin='' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
+		}
+		else{
+			$query_name = "SELECT name FROM warehouse WHERE id='$value'";
+			$result_name = mysqli_query($con,$query_name);
+			$row_name = mysqli_fetch_assoc($result_name);
+			$name = $row_name['name'];
+			$reason = $_POST[$key."_idreason"];
+			$distance = $_POST[$key."_iddistance"];
+			$query = "UPDATE " . $tablename . " SET new_id_admin='$value', new_name_admin='$name', approve_admin='yes', new_distance_admin='$distance', reason_admin='$reason' WHERE from_id='$fromid' AND to_id='$toid'";
+			writeLog("User ->" ." Save Data | approve district change id ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . "| " . $value);
+		}
+		mysqli_query($con,$query);
 	}
-	else if($value=="same"){
-		$query = "UPDATE " . $tablename . " SET approve_admin='no' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-		writeLog("User ->" ." Save Data | approve admin change no ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . " - ". $commodity);
-	}
-	else if($value=="no"){
-		// this case will not fall as we have check for this in js
-		$query = "UPDATE " . $tablename . " SET approve_admin='', new_id_admin='' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-	}
-	else if($value==""){
-		$query = "";
-		//$query = "UPDATE " . $tablename . " SET approve_admin='', new_id_admin='' WHERE from_id='$fromid' AND to_id='$toid' AND commodity='$commodity'";
-	}
-	else{
-		$query_name = "SELECT name FROM warehouse WHERE id='$value'";
-		$result_name = mysqli_query($con,$query_name);
-		$row_name = mysqli_fetch_assoc($result_name);
-		$name = $row_name['name'];
-		$reason = $_POST[$key."_idreason"];
-		$distance = $_POST[$key."_iddistance"];
-		$query = "UPDATE " . $tablename . " SET new_id_admin='$value', new_name_admin='$name', approve_admin='yes', new_distance_admin='$distance', reason_admin='$reason' WHERE from_id='$fromid' AND to_id='$toid'";
-		writeLog("User ->" ." Save Data | approve district change id ->". $_SESSION['user'] . "| " . $fromid . " - " . $toid . "| " . $value);
-	}
-	mysqli_query($con,$query);
 }
 mysqli_close($con);
 
