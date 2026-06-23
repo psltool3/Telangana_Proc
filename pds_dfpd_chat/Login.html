@@ -97,26 +97,22 @@
         padding: 10px;
         margin-left: 119px;
       }
-      .login-container {
-        background-image: url("img/Chattisgarh1.png");
-        background-image: url("img/Chattiagrah2.png");
-        background-image: url("img/Punjab-login-backdrop.png");
-
-        background-size: cover;
-      }
-      .login-container {
+     .login-container {
         background-size: cover;
         background-position: center;
-        animation: slideshow 10s infinite;
+        animation: slideshow 12s infinite;
+        transition: background-image 1s ease-in-out;
       }
 
       @keyframes slideshow {
-        0%,
-        100% {
-          background-image: url("img/Chattisgarh1.png");
+        0%, 100% {
+          background-image: url("img/proc1.jpeg");
         }
-        50% {
-          background-image: url("img/chhattisgarh2.png");
+        33% {
+          background-image: url("img/proc2.jpeg");
+        }
+        66% {
+          background-image: url("img/proc3.jpeg");
         }
       }
 
