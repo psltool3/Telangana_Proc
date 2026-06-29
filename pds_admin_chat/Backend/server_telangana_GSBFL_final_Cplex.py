@@ -46,6 +46,8 @@ ALLOWED_EXTENSIONS = {'xlsx', 'xls'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 stop_process = False
+SERVER_INSTANCE_ID = str(uuid.uuid4())
+active_processes = {}  # Global dictionary to map job_id -> multiprocessing.Process
 
 def count_distinct_months(input_str):
     months_list = [month.strip() for month in input_str.split(',')]
@@ -1342,12 +1344,38 @@ def get_monthly_data():
 def processCancel():
     global stop_process
     stop_process = True
-    data = {}
-    data['status'] = 0
-    data['message'] = "process stopped"
-    json_data = json.dumps(convert_decimal(data))
-    json_object = json.loads(json_data)
-    return json.dumps(convert_decimal(json_object), indent=1)
+    
+    # Identify which user/client is cancelling
+    client_id = (
+        request.form.get("client_id")
+        or request.form.get("username")
+        or request.form.get("user")
+        or ""
+    )
+    
+    if client_id:
+        # Retrieve the currently running or queued job from SQLite
+        job = _job_get_active_for_client(client_id)
+        if job:
+            job_id = job["job_id"]
+            
+            # 1. Update SQLite job status so polling ends immediately
+            _job_update(job_id, status="failed", message="process stopped", error="Cancelled by user")
+            
+            # 2. Terminate the active OS process running the solver
+            p = active_processes.get(job_id)
+            if p and p.is_alive():
+                try:
+                    p.terminate()
+                    p.join(timeout=1.0)
+                except Exception as e:
+                    write_log("Error terminating process: " + str(e))
+            
+            # 3. Remove process from the active registry
+            active_processes.pop(job_id, None)
+            
+    data = {'status': 0, 'message': "process stopped"}
+    return jsonify(data)
 
 @app.route('/processFile', methods=['POST'])
 def processFile():
@@ -1371,6 +1399,7 @@ def processFile():
         # so the Flask server thread stays responsive for polling.
         p = multiprocessing.Process(target=_run_processfile_in_background, args=(job_id, form_dict), daemon=True)
         p.start()
+        active_processes[job_id] = p  # <--- Track the process object
         return jsonify({"status": 1, "job_id": job_id, "message": "processing started"})
     # END CHANGE (async start mode)
 
@@ -4373,6 +4402,7 @@ def processFile_leg1():
         # CHANGE: run heavy optimization in a separate OS process
         p = multiprocessing.Process(target=_run_processfileLeg1_in_background, args=(job_id, form_dict), daemon=True)
         p.start()
+        active_processes[job_id] = p  # <--- Track the process object
         return jsonify({"status": 1, "job_id": job_id, "message": "processing started"})
     # END CHANGE (async start mode)
     scenario_type = request.form.get('type')

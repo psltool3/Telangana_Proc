@@ -681,6 +681,7 @@ require('Header.php');
 
 <script>
 	var isJobRunning = false;
+	var controller = null; // Global abort controller
 
 	function checkServerStatus() {
 		// Make an AJAX request to your Python server
@@ -1059,15 +1060,20 @@ require('Header.php');
 	}
 
 	function pollJobStatus(jobId) {
+		if (!isJobRunning) return; // Exit if user cancelled
+		
 		fetch(pythonUrl + 'job_status/' + jobId)
 			.then(response => response.json())
 			.then(data => {
+				if (!isJobRunning) return; // Double-check cancel state
+				
 				if (data.status == 1) {
 					var job = data.job;
 					if (job.status === 'completed') {
 						fetch(pythonUrl + 'job_result/' + jobId)
 							.then(response => response.json())
 							.then(resultData => {
+								if (!isJobRunning) return;
 								handleOptimizationResult(resultData);
 							});
 					} else if (job.status === 'failed') {
@@ -1080,6 +1086,7 @@ require('Header.php');
 				}
 			})
 			.catch(err => {
+				if (!isJobRunning) return;
 				console.error("Polling error:", err);
 				setTimeout(() => pollJobStatus(jobId), 5000);
 			});
@@ -1153,19 +1160,29 @@ require('Header.php');
 
 	function cancelRequest() {
 		if (controller) {
-			controller.abort(); // Abort the fetch request using the AbortController
-			console.log('Request cancelled.');
-			const formData = new FormData();
-			fetch(pythonUrl + 'processCancel', {
-				method: 'POST',
-				body: formData
-			})
-				.then(response => response.json())
-				.then(data => {
-				});
-		} else {
-			console.log('No request to cancel.');
+			try {
+				controller.abort(); // Abort the fetch request using the AbortController
+			} catch (e) {
+				console.error("Error aborting controller:", e);
+			}
 		}
+		console.log('Request cancelled.');
+		
+		const formData = new FormData();
+		formData.append('user', document.getElementById("username").value); // Send User ID to cancel
+		
+		fetch(pythonUrl + 'processCancel', {
+			method: 'POST',
+			body: formData
+		})
+			.then(response => response.json())
+			.then(data => {
+				resetUI(); // Hide loader popup, turn toggle switch off
+			})
+			.catch(err => {
+				console.error("Error sending cancel request:", err);
+				resetUI();
+			});
 	}
 
 
