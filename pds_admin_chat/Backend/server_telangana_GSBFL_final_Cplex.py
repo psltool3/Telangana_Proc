@@ -5848,21 +5848,21 @@ def processFile_leg1():
         data["Scenario_Baseline"] = "Baseline"
         
         data["WH_Used"] = df5['From_ID'].nunique()
-        data["WH_Used_Baseline"] = "5"
+        data["WH_Used_Baseline"] = "2340"
         
         data["FPS_Used"] = df5['To_ID'].nunique()
-        data["FPS_Used_Baseline"] = "76"
+        data["FPS_Used_Baseline"] = "189"
         
         data['Demand'] = (df10['quantity']).sum()
-        data['Demand_Baseline'] = "69,247"
+        data['Demand_Baseline'] = "2,95,54,648"
         result1 = ((dfinal['quantity']) * dfinal['Distance']).sum()
         Total_Demand= (df10['quantity']).sum()
         
         data['Total_QKM'] = float(result1)
-        data['Total_QKM_Baseline'] = "67,16,263"
+        data['Total_QKM_Baseline'] = "1,25,33,54,619"
         
         data['Average_Distance'] = float(round(result1, 2)) / Total_Demand
-        data['Average_Distance_Baseline'] = "96.66"
+        data['Average_Distance_Baseline'] = "42.40"
 
         if stop_process==True:
             data = {}

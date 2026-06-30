@@ -137,11 +137,11 @@ if ($result && $result->num_rows > 0) {
 	$tableData["Average_Distance_Optimised"] = $averagedistanceoptimised;
 	$tableData["Scenario_optimised"] = "Optimised";
 	
-	$tableData["WH_Used_Baseline"] = '255';
-	$tableData["FPS_Used_Baseline"] = '17,829';
-	$tableData["Demand_Baseline"] = '87,13,290';
-	$tableData["Total_QKM_Baseline"] = '11,58,22,464';
-	$tableData["Average_Distance_Baseline"] = '13.29';
+	$tableData["WH_Used_Baseline"] = '2340';
+	$tableData["FPS_Used_Baseline"] = '189';
+	$tableData["Demand_Baseline"] = '2,95,54,648';
+	$tableData["Total_QKM_Baseline"] = '1,25,33,54,619';
+	$tableData["Average_Distance_Baseline"] = '42.40';
 	$tableData["Scenario_Baseline"] = "Baseline";
 	
 	$resultarray["data"] = $data;
