@@ -142,7 +142,7 @@ if($currentTimestamp >= $targetTimestamp) {
                 <!-- START BREADCRUMB -->
                 <ul class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li class="active">Chhattisgarh Optimised Planning (Mill to Warehouse)</li>
+                    <li class="active">Telangana Optimised Planning (Mill to Warehouse)</li>
                 </ul>
                 <!-- END BREADCRUMB -->
 
@@ -156,7 +156,7 @@ if($currentTimestamp >= $targetTimestamp) {
                             <!-- START SIMPLE DATATABLE -->
                             <div class="panel panel-default">
 								<div class="panel-heading">
-                                    <h3 class="panel-title">Chhattisgarh Optimised Planning (Mill to Warehouse) - <b><?php echo $district; ?></b> <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
+                                    <h3 class="panel-title">Telangana Optimised Planning (Mill to Warehouse) - <b><?php echo $district; ?></b> <div id="timer"> <b>Time Left &nbsp </b> <span id="countdown"></span></h3>
                                 </div>
                             </div>
 							<div class="row">

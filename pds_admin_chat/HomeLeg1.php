@@ -701,6 +701,10 @@ require('Header.php');
 
 			document.getElementById("resultdistrict").style.fontSize   = "18px";
 			document.getElementById("resultdistrict").style.fontWeight  = "bold";
+
+			if (document.getElementById("result").innerHTML.includes("Optimization cannot be done")) {
+				document.getElementById("generateoptinizedplanbutton").style.display = "none";
+			}
 		} else {
 			document.getElementById("resultdistrict").innerHTML = "";
 			document.getElementById("generateoptinizedplanbutton").style.display = "none";

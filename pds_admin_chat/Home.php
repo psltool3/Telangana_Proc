@@ -1336,7 +1336,7 @@ function handleStateCheckboxChange() {
 				}
 
 				if (totalCapacity > -2 && totalDemand > -2) {
-					if (totalCapacity <= totalDemand && isEmptyDistrict(districtdata)) {
+					if (totalCapacity <= totalDemand) {
 						document.getElementById("result").innerHTML =
 							"<span style='font-weight: bold; font-size: 20px; color: green;'>Optimization can be done.</span>";
 						document.getElementById("districtcheckbox").style.display = "block";
